@@ -21,8 +21,34 @@ Files brought in line (app01 → app02):
 | `database/migrations/2026_06_28_180000_index_live_calls_v5.php` | missing on app02 (added) |
 
 After sync: all five md5-match app01; `php8.1-fpm` reloaded on app02 to clear opcache.
-Remaining node differences are CRLF-only (line endings) on
-`RankingController.php` and `V5RoomRealtimeService.php` — functionally identical.
+
+Line-ending/whitespace normalization (app01 → app02) brought the last two files to
+byte parity:
+
+| File | Before |
+|------|--------|
+| `app/Services/V5/V5RoomRealtimeService.php` | app02 was CRLF, app01 LF |
+| `app/Http/Controllers/Api/V5/RankingController.php` | app02 had 1 extra whitespace line |
+
+Final state: **all 624 tracked code files byte-identical** across app01 and app02
+(combined manifest md5 `9889dc166ddcdf40ff754c9d2868185c` on both). Verified to hold
+after the `php8.1-fpm` reload (reload touches opcache, not disk).
+
+### API parity check (live)
+
+Hit both nodes directly on `:80` (`Host: queenlive.site`, `X-Forwarded-Proto: https`)
+with identical requests and compared responses:
+
+| Endpoint | Result (both nodes) |
+|----------|---------------------|
+| `GET /api/v5/setting_info` | HTTP 200, 617 b, md5 `42c8be4e23204d9fc2184351e27dee89` — **byte-identical** |
+| `GET /api/v4/top_list` (RankingController) | HTTP 401, md5 `11977a90…` — identical |
+| `GET /api/v4/rank` (RankingController) | HTTP 401, md5 `11977a90…` — identical |
+| `GET /api/v4/comment_skip_word_list` | HTTP 401, md5 `11977a90…` — identical |
+
+`setting_info` (unauthenticated, live config/version data) returned the same bytes from
+both nodes; auth-gated endpoints returned matching `401`s. Both nodes serve identical
+responses at every observable layer.
 
 ## 2026-07-18 — admin sidebar fix
 
