@@ -401,7 +401,7 @@ footer{position:relative;z-index:2;padding:50px 0 30px;border-top:1px solid rgba
         <h1>Go Live. Connect.<br><span class="grad">Shine.</span></h1>
         <p class="lead">QueenLive is where creators and fans meet in real time — audio &amp; video rooms, moments, gifts, rankings and rewards, all in one premium community.</p>
         <div class="hero-ctas">
-          <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.as.livestrem" target="_blank" rel="noopener">
+          <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.fl.fairylive" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24" fill="none"><path d="M5 5l14 7-14 7V5z" fill="#fff"/></svg>
             Get on Google Play
           </a>
@@ -628,7 +628,7 @@ footer{position:relative;z-index:2;padding:50px 0 30px;border-top:1px solid rgba
       <h2>Your stage is waiting.</h2>
       <p>Download QueenLive now and start your first live room in under a minute.</p>
       <div class="download-btns">
-        <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.as.livestrem" target="_blank" rel="noopener">
+        <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.fl.fairylive" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="none"><path d="M5 5l14 7-14 7V5z" fill="#fff"/></svg>
           Get on Google Play
         </a>
@@ -659,7 +659,7 @@ footer{position:relative;z-index:2;padding:50px 0 30px;border-top:1px solid rgba
         </div>
         <div class="foot-col">
           <h5>Get the app</h5>
-          <a href="https://play.google.com/store/apps/details?id=com.as.livestrem" target="_blank" rel="noopener">Google Play</a>
+          <a href="https://play.google.com/store/apps/details?id=com.fl.fairylive" target="_blank" rel="noopener">Google Play</a>
           <a href="https://queenlive.site">queenlive.site</a>
         </div>
       </div>

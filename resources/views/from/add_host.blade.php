@@ -875,7 +875,7 @@
                         <i class="fa-solid fa-circle"></i>
                         <span>Live Streaming App</span>
                     </div>
-                    <a class="pill" href="https://play.google.com/store/apps/details?id=com.as.livestrem" target="_blank" rel="noopener noreferrer">
+                    <a class="pill" href="https://play.google.com/store/apps/details?id=com.fl.fairylive" target="_blank" rel="noopener noreferrer">
                         <i class="fa-brands fa-google-play"></i>
                         <span>Play Store</span>
                     </a>
@@ -904,7 +904,7 @@
                         </p>
 
                         <div class="hero-actions">
-                            <a class="hero-button primary" href="https://play.google.com/store/apps/details?id=com.as.livestrem" target="_blank" rel="noopener noreferrer">
+                            <a class="hero-button primary" href="https://play.google.com/store/apps/details?id=com.fl.fairylive" target="_blank" rel="noopener noreferrer">
                                 <i class="fa-brands fa-google-play"></i>
                                 <span>Get It On Play Store</span>
                             </a>
@@ -1087,7 +1087,7 @@
                                     more closely for users, creators, and agencies.
                                 </p>
                                 <div class="hero-actions">
-                                    <a class="hero-button primary" href="https://play.google.com/store/apps/details?id=com.as.livestrem" target="_blank" rel="noopener noreferrer">
+                                    <a class="hero-button primary" href="https://play.google.com/store/apps/details?id=com.fl.fairylive" target="_blank" rel="noopener noreferrer">
                                         <i class="fa-brands fa-google-play"></i>
                                         <span>Download From Play Store</span>
                                     </a>
@@ -1111,7 +1111,7 @@
                 <div class="footer-links">
                     <a href="{{ url('/') }}">Home</a>
                     <a href="#experience">Experience</a>
-                    <a href="https://play.google.com/store/apps/details?id=com.as.livestrem" target="_blank" rel="noopener noreferrer">Play Store</a>
+                    <a href="https://play.google.com/store/apps/details?id=com.fl.fairylive" target="_blank" rel="noopener noreferrer">Play Store</a>
                 </div>
             </div>
         </footer>

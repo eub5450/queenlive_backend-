@@ -276,7 +276,7 @@
           </svg>
           Open in QueenLive
         </a>
-        <a id="getApp" href="https://play.google.com/store/apps/details?id=com.as.livestrem"
+        <a id="getApp" href="https://play.google.com/store/apps/details?id=com.fl.fairylive"
            class="btn btn-secondary" target="_blank" rel="noopener">
           <svg class="ic" viewBox="0 0 24 24" fill="#FFE283" aria-hidden="true">
             <path d="M3.6 1.3a1.5 1.5 0 0 0-1.6 1.5v18.4a1.5 1.5 0 0 0 2.4 1.2l11-7.2L3.6 1.3zm12.5 8.8l3.7-2.4-3.7-2.4-1.7 1.1 1.7 1.3-1.7 1.3 1.7 1.1zm-1.5 1L4.8 17.6l8.1-5.3 1.7 1zM4.8 5.4l9.7 6.3-1.7 1.1L4.8 5.4z"/>
@@ -298,8 +298,8 @@
       var isIOS       = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
       var path        = window.location.pathname;                  // /new_live/share/v2/...
       var host        = window.location.host;                      // queenlive.site
-      var playStore   = 'https://play.google.com/store/apps/details?id=com.as.livestrem';
-      var marketUri   = 'market://details?id=com.as.livestrem';
+      var playStore   = 'https://play.google.com/store/apps/details?id=com.fl.fairylive';
+      var marketUri   = 'market://details?id=com.fl.fairylive';
 
       // ----- AUTO-LAUNCH: try the QueenLive app the moment this page loads.
       // The app already has queenlive.site registered as an autoVerify App Link
@@ -312,7 +312,7 @@
           var intentUrl = 'intent://' + host + path
             + '#Intent'
             + ';scheme=https'
-            + ';package=com.as.livestrem'
+            + ';package=com.fl.fairylive'
             + ';S.browser_fallback_url=' + encodeURIComponent(playStore)
             + ';end';
           window.location.replace(intentUrl);
