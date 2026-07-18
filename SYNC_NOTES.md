@@ -50,6 +50,27 @@ with identical requests and compared responses:
 both nodes; auth-gated endpoints returned matching `401`s. Both nodes serve identical
 responses at every observable layer.
 
+## 2026-07-18 — co-host "call request" not reaching host (audio + video)
+
+Bug: audience "call request" never notified the host in both audio and video rooms.
+Root cause (4-agent investigation): the level-2 gate was removed on the Flutter client
+(`minimumCallRequestLevel = 0`) but **not** on the backend. `RoomActionService::requestCohost`
+(the live path — client hits `POST /api/v5/room/{type}/{channel}/cohost/request`) still held
+`COHOST_MIN_LEVEL = ['audio'=>2,'video'=>2,'multi'=>2]` and **early-returned `level_too_low`
+before broadcasting `room.cohost.requested`**. Since `resolveUserLevel()` often reads 0, this
+rejected virtually every request in both room types.
+
+Fix (`app/Services/V5/RoomActionService.php:42`): `COHOST_MIN_LEVEL` → `0/0/0`, matching the
+client. Deployed to app-01 + app-02 (backups, `php -l` clean, `php8.1-fpm` reloaded); app-01 ==
+app-02 == mirror.
+
+Companion client fixes (Flutter repo `eub5450/queenLive_app`, needs APK rebuild to take effect):
+- Audio `sendCallRequest`: use the page's `userId → state.userId/autoDisposeProvider().userId`
+  fallback for the requester id and guard non-empty (was passing a possibly-empty `userId`, which
+  made `requestCohost` omit `user_id`/`co_host_id` → backend `user_id_required`, silent no-op).
+- Video `sendCallRequest`: added `requesterId.isEmpty` to the pre-send guard (same identity-omission
+  protection; video already had the id fallback + a recovery poll).
+
 ## 2026-07-18 — admin sidebar fix
 
 `resources/views/backend/layouts/sidebar.blade.php`: added the missing `</ul>` that closed

@@ -38,11 +38,16 @@ class RoomActionService
     /** @var RoomBroadcastService */
     protected $broadcast;
 
-    /** Minimum level required to request cohost, per room type. */
+    /** Minimum level required to request cohost, per room type.
+     *  2026-07-18: gate removed (set to 0) to match the Flutter client, which
+     *  dropped its `minimumCallRequestLevel` to 0. The old level>=2 check here
+     *  early-returned 'level_too_low' BEFORE broadcasting room.cohost.requested,
+     *  so sub-level-2 (and level-reads-0) audience requests never reached the
+     *  host in audio OR video. Keep the structure so a gate can be re-enabled. */
     const COHOST_MIN_LEVEL = [
-        'audio' => 2,
-        'video' => 2,
-        'multi' => 2,
+        'audio' => 0,
+        'video' => 0,
+        'multi' => 0,
     ];
 
     public function __construct(RoomBroadcastService $broadcast)
