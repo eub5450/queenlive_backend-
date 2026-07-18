@@ -57,11 +57,17 @@ class LoginController extends Controller
         {
             $request->session()->regenerate();
 
-            if (auth()->user()->is_admin == 1) {
+            // Boss 2026-07-19: subadmins (is_admin=3) and other permission-based
+            // admins have is_admin != 1, so the old `is_admin == 1` check sent them
+            // to the AUTHOR dashboard and the admin panel never showed. Route anyone
+            // the admin panel accepts (full admin OR the `sidebar_access` permission
+            // — the SAME gate AdminMiddleware uses) to admin.dashboard.
+            $u = auth()->user();
+            if ((int) $u->is_admin === 1
+                || \App\Models\AdminParmisiton::allowed((int) $u->id, 'sidebar_access', false)) {
                 return redirect()->route('admin.dashboard');
-            }else{
-                    return redirect()->route('author.dashboard');
-
+            } else {
+                return redirect()->route('author.dashboard');
             }
         }else{
             return redirect()->route('login')
