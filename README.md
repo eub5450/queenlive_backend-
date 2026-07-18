@@ -43,7 +43,17 @@ ssh -i "$KEY" root@152.42.223.173   # app-02
 2. Blade change → `php artisan view:clear`. PHP change → `systemctl reload php8.1-fpm`.
 3. Verify byte parity between app-01 and app-02 (`md5sum` manifest) after any edit.
 
+## Recent fixes
+
+- **Co-host "call request" not reaching host (audio + video)** — `RoomActionService::requestCohost`
+  still enforced `COHOST_MIN_LEVEL = 2` (early-returned `level_too_low` before broadcasting
+  `room.cohost.requested`) after the Flutter client's level gate was removed → set to `0/0/0`.
+  Live send path is `POST /api/v5/room/{type}/{channel}/cohost/request` (RoomActionService), **not**
+  the legacy `*BrdController@CallRequest`. Companion Flutter identity-omission guards (client repo).
+- **Admin panel sidebar** — added missing `</ul>` closing the `metismenu` list.
+- **Role system** — `admin@admin2.com` full-admin → sub-admin (`adminparmisiton.admin_mode`).
+- **app-01 ↔ app-02 drift** — synced to byte-identical (624 files) + live API parity check.
+
 ## History
 
-See [`SYNC_NOTES.md`](./SYNC_NOTES.md) — admin sidebar fix, admin→subadmin role change,
-and the 2026-07-18 app-01 ↔ app-02 byte-parity sync + live API parity check.
+See [`SYNC_NOTES.md`](./SYNC_NOTES.md) for the full detail of each fix above.
