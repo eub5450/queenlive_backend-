@@ -1,0 +1,4 @@
+[25-May-2026 21:28:02 UTC] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Exceptions\Handler' not found in /home/bdlive/public_html/app/Exceptions/Handler.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/bdlive/public_html/app/Exceptions/Handler.php on line 7

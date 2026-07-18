@@ -1,0 +1,4 @@
+[25-May-2026 21:28:01 UTC] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Support\Providers\EventServiceProvider' not found in /home/bdlive/public_html/app/Providers/EventServiceProvider.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/bdlive/public_html/app/Providers/EventServiceProvider.php on line 10

@@ -1,0 +1,4 @@
+[25-May-2026 21:27:38 UTC] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Database\Eloquent\Factories\Factory' not found in /home/bdlive/public_html/database/factories/UserFactory.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/bdlive/public_html/database/factories/UserFactory.php on line 9

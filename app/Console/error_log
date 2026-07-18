@@ -1,0 +1,8 @@
+[16-May-2026 12:33:20 UTC] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Console\Kernel' not found in /home/bdlive/public_html/app/Console/Kernel.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/bdlive/public_html/app/Console/Kernel.php on line 8
+[25-May-2026 21:28:02 UTC] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Console\Kernel' not found in /home/bdlive/public_html/app/Console/Kernel.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/bdlive/public_html/app/Console/Kernel.php on line 8

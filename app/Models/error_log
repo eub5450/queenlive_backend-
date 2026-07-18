@@ -1,0 +1,32 @@
+[04-Apr-2026 03:26:02 UTC] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Auth\User' not found in /home/bdlive/public_html/app/Models/User.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/bdlive/public_html/app/Models/User.php on line 14
+[04-Apr-2026 13:49:32 UTC] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Auth\User' not found in /home/bdlive/public_html/app/Models/User.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/bdlive/public_html/app/Models/User.php on line 14
+[04-Apr-2026 13:49:36 UTC] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Auth\User' not found in /home/bdlive/public_html/app/Models/User.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/bdlive/public_html/app/Models/User.php on line 14
+[04-Apr-2026 13:49:37 UTC] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Auth\User' not found in /home/bdlive/public_html/app/Models/User.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/bdlive/public_html/app/Models/User.php on line 14
+[04-Apr-2026 13:51:28 UTC] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Auth\User' not found in /home/bdlive/public_html/app/Models/User.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/bdlive/public_html/app/Models/User.php on line 14
+[23-Apr-2026 09:12:10 UTC] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Auth\User' not found in /home/bdlive/public_html/app/Models/User.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/bdlive/public_html/app/Models/User.php on line 14
+[28-Apr-2026 13:27:57 UTC] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Auth\User' not found in /home/bdlive/public_html/app/Models/User.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/bdlive/public_html/app/Models/User.php on line 14
+[25-May-2026 21:28:02 UTC] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Auth\User' not found in /home/bdlive/public_html/app/Models/User.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/bdlive/public_html/app/Models/User.php on line 14

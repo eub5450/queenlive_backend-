@@ -1,0 +1,4 @@
+[18-Apr-2026 18:12:07 UTC] PHP Fatal error:  Uncaught Error: Class 'App\Http\Controllers\Controller' not found in /home/bdlive/public_html/app/Http/Controllers/HomeController.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/bdlive/public_html/app/Http/Controllers/HomeController.php on line 9
