@@ -130,9 +130,11 @@ profile_table_recharge_history, profile_table_gift_history
 ### Sidebar — ID Management (3 keys)
 | Key | Controls |
 |-----|---------|
-| `sidebar_ban_id` | Ban ID page |
-| `sidebar_invisible_id` | Invisible ID page (separate from ban) |
-| `sidebar_official_id` | Official ID page (separate from ban) |
+| `sidebar_ban_id` | Ban ID parent menu + child link |
+| `sidebar_invisible_id` | Invisible ID parent menu + child link (gates both — no empty parent) |
+| `sidebar_official_id` | Official ID parent menu + child link (gates both — no empty parent) |
+
+> **Important**: `sidebar_invisible_id` controls the parent `<li>` AND the child link together. Granting only `sidebar_ban_id` does NOT show the Invisible ID or Official ID menus. Each of the three ID menus is fully independent.
 
 ### Sidebar — Live, Settings (8 keys)
 | Key | Controls |

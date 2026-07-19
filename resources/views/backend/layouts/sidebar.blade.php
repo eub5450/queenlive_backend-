@@ -125,27 +125,25 @@
             <!--        <li><a href="{{URL::to('profile_pending')}}">Pending</a></li>-->
             <!--    </ul>-->
             <!--</li>-->
-            @if($adminCan('sidebar_menu_ban') && $adminAny(['sidebar_ban_id', 'sidebar_invisible_id', 'sidebar_official_id']))
+            @if($adminCan('sidebar_menu_ban') && $adminCan('sidebar_invisible_id'))
              <li>
                 <a class="has-arrow material-ripple" href="#">
                     <i class="typcn typcn-book mr-2"></i>
                     Invisibal ID
                 </a>
                 <ul class="nav-second-level">
-
-                    @if($adminCan('sidebar_invisible_id'))<li><a href="{{URL::to('invisibal')}}">Invisibal</a></li>@endif
+                    <li><a href="{{URL::to('invisibal')}}">Invisibal</a></li>
                 </ul>
             </li>
             @endif
-            @if($adminCan('sidebar_menu_ban') && $adminAny(['sidebar_ban_id', 'sidebar_invisible_id', 'sidebar_official_id']))
+            @if($adminCan('sidebar_menu_ban') && $adminCan('sidebar_official_id'))
              <li>
                 <a class="has-arrow material-ripple" href="#">
                     <i class="typcn typcn-book mr-2"></i>
                     Official ID
                 </a>
                 <ul class="nav-second-level">
-
-                    @if($adminCan('sidebar_official_id'))<li><a href="{{URL::to('official_id')}}">Official</a></li>@endif
+                    <li><a href="{{URL::to('official_id')}}">Official</a></li>
                 </ul>
             </li>
             @endif
