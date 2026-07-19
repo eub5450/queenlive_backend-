@@ -155,7 +155,7 @@ profile_table_recharge_history, profile_table_gift_history
 | `sidebar_setting_fanclub` | Fan club settings |
 | `sidebar_setting_fun_sticker` | Fun sticker settings |
 
-### Dashboard (26 keys)
+### Dashboard (28 keys)
 | Key | Controls |
 |-----|---------|
 | `dashboard_access` | Entire dashboard (master gate) |
@@ -166,11 +166,13 @@ profile_table_recharge_history, profile_table_gift_history
 | `dashboard_coin_generate_game` | Coin Generate card |
 | `dashboard_game_data` | Game data cards |
 | `dashboard_realtime_feeds` | Comment/Chat feed |
-| `dashboard_game_pro_balance` | Game Pro Balance card |
+| `dashboard_game_pro_balance` | Game Pro Balance card (breakdown grid + summary card) |
 | `dashboard_game_pro_balance_manage` | GamePro Calculation + Deposit/Withdraw panel |
+| `dashboard_today_game_profit` | Today Game Profit panel (Local today \| Thomas today) |
+| `dashboard_thomas_settlements` | Thomas Settlements panel (Bet \| Payout) |
 | `dashboard_total_users` | Total Users card |
 | `dashboard_user_wallets` | User Wallets card |
-| `dashboard_game_profit` | Game Profit card |
+| `dashboard_game_profit` | Game Profit card (total summary) |
 | `dashboard_today_recharge` | Today Recharge card |
 | `dashboard_today_sending` | Today Sending card |
 | `dashboard_today_receiving` | Today Receiving card |

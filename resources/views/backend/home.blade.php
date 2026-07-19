@@ -825,6 +825,7 @@ Admin Dashboard |
           </div>
         </div>
       @endunless
+      @if($adminCan('dashboard_today_game_profit'))
       <div class="profit-panel">
         <div class="profit-panel-title">Today Game Profit</div>
         <div class="profit-panel-value {{ ($game_profit_today ?? 0) >= 0 ? 'profit' : 'loss' }}">
@@ -834,6 +835,8 @@ Admin Dashboard |
           Local today: {{ $game_profit_breakdown['local_today'] ?? 0 }} | Thomas today: {{ $game_profit_breakdown['thomas_today'] ?? 0 }}
         </div>
       </div>
+      @endif
+      @if($adminCan('dashboard_game_pro_balance'))
       <div class="profit-panel">
         <div class="profit-panel-title">Game Pro Balance</div>
         <div class="profit-panel-value">{{ $game_pro_balance ?? 0 }}</div>
@@ -841,6 +844,8 @@ Admin Dashboard |
           Active Fruits, Greedy, Teen Patti, Five Star and Lucky Gift pools.
         </div>
       </div>
+      @endif
+      @if($adminCan('dashboard_thomas_settlements'))
       <div class="profit-panel">
         <div class="profit-panel-title">Thomas Settlements</div>
         <div class="profit-panel-value {{ (($game_profit_breakdown['thomas_total'] ?? 0) >= 0) ? 'profit' : 'loss' }}">
@@ -850,6 +855,7 @@ Admin Dashboard |
           Bet: {{ $game_profit_breakdown['thomas_total_bet'] ?? 0 }} | Payout: {{ $game_profit_breakdown['thomas_total_payout'] ?? 0 }}
         </div>
       </div>
+      @endif
     </div>
 
     <div class="dashboard-summary-grid metric-summary-grid" id="dashboard-all-summary-cards">
