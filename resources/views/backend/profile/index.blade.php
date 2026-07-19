@@ -1617,9 +1617,11 @@ Supplier | Employee Profile
                                             </div>
                                             <div class="power-control-buttons" style="display:flex;flex-wrap:wrap;gap:4px;">
                                                 @foreach([1 => 'Main', 2 => 'Country', 3 => 'Sub', 0 => 'User'] as $roleValue => $roleLabel)
+                                                    @if($adminCan('profile_btn_user_role'))
                                                     <a href="{{ URL::to('admin/user-role/'.$user->id.'/'.$roleValue) }}" class="btn btn-xs {{ $panelRole === $roleValue ? 'btn-success' : ($roleValue === 0 ? 'btn-danger' : 'btn-primary') }}">
                                                         {{ $panelRole === $roleValue ? 'Active' : 'Make' }} {{ $roleLabel }}
                                                     </a>
+                                                    @endif
                                                 @endforeach
                                             </div>
                                         </div>
@@ -1630,9 +1632,13 @@ Supplier | Employee Profile
                                             </div>
                                             <div class="power-control-buttons">
                                                 @if($user->prosss_top==1)
+                                                    @if($adminCan('profile_btn_top_position'))
                                                     <a href="{{URL::to('/admin/top-position',$user->id)}}" class="btn btn-xs btn-success">On</a>
+                                                    @endif
                                                 @else
+                                                    @if($adminCan('profile_btn_top_position'))
                                                     <a href="{{URL::to('/admin/top-position',$user->id)}}" class="btn btn-xs btn-danger">Off</a>
+                                                    @endif
                                                 @endif
                                             </div>
                                         </div>
@@ -1714,9 +1720,13 @@ Supplier | Employee Profile
                                             </div>
                                             <div class="power-control-buttons">
                                                 @if($user->withdraw_active!=1)
+                                                    @if($adminCan('profile_btn_withdraw_active'))
                                                     <a href="{{URL::to('/withdraw_active',$user->id)}}" class="btn btn-xs btn-success">On</a>
+                                                    @endif
                                                 @else
+                                                    @if($adminCan('profile_btn_withdraw_active'))
                                                     <a href="{{URL::to('/withdraw_active',$user->id)}}" class="btn btn-xs btn-danger">Off</a>
+                                                    @endif
                                                 @endif
                                             </div>
                                         </div>
@@ -1742,9 +1752,13 @@ Supplier | Employee Profile
                                             </div>
                                             <div class="power-control-buttons">
                                                 @if($user->is_host_id!=1)
+                                                    @if($adminCan('profile_btn_active_host'))
                                                     <a href="{{URL::to('active_host/'.$user->id)}}" class="btn btn-xs btn-success">Active</a>
+                                                    @endif
                                                 @else
+                                                    @if($adminCan('profile_btn_reject_host'))
                                                     <a href="{{URL::to('reject_host/'.$user->id)}}" class="btn btn-xs btn-danger">Reject</a>
+                                                    @endif
                                                 @endif
                                             </div>
                                         </div>
@@ -1756,9 +1770,13 @@ Supplier | Employee Profile
                                             </div>
                                             <div class="power-control-buttons">
                                                 @if($user->is_coin_protal_active!=1)
+                                                    @if($adminCan('profile_btn_active_protal'))
                                                     <a href="{{URL::to('active_protal/'.$user->id)}}" class="btn btn-xs btn-success">Active</a>
+                                                    @endif
                                                 @else
+                                                    @if($adminCan('profile_btn_reject_protal'))
                                                     <a href="{{URL::to('reject_protal/'.$user->id)}}" class="btn btn-xs btn-danger">Reject</a>
+                                                    @endif
                                                 @endif
                                             </div>
                                         </div>
@@ -1770,9 +1788,13 @@ Supplier | Employee Profile
                                             </div>
                                             <div class="power-control-buttons">
                                                 @if($user->is_official_id!=1)
+                                                    @if($adminCan('profile_btn_active_official'))
                                                     <a href="{{URL::to('active_official_id/'.$user->id)}}" class="btn btn-xs btn-success">Active</a>
+                                                    @endif
                                                 @else
+                                                    @if($adminCan('profile_btn_reject_official'))
                                                     <a href="{{URL::to('reject_official_id/'.$user->id)}}" class="btn btn-xs btn-danger">Reject</a>
+                                                    @endif
                                                 @endif
                                             </div>
                                         </div>
@@ -2681,9 +2703,11 @@ Supplier | Employee Profile
                                 <td><span class="text-warning">{{$sanding_history->value}}</span></td>
                                 <td>{{$sanding_history->date}}</td>
                                 <td>
+                                    @if($adminCan('profile_btn_gift_recall'))
                                     <a href="{{URL::to('gift_recall',$sanding_history->id)}}" class="btn btn-sm btn-danger">
                                         <i class="fas fa-undo-alt"></i> Recall
                                     </a>
+                                    @endif
                                 </td>
                             </tr>
                             @php $sanding_history_total += $sanding_history->value; @endphp
@@ -2739,9 +2763,11 @@ Supplier | Employee Profile
                                 <td>{{$reciving_history->date}}</td>
                                 <td>{{$reciving_history->imie}}</td>
                                 <td>
+                                    @if($adminCan('profile_btn_gift_recall'))
                                     <a href="{{URL::to('gift_recall',$reciving_history->id)}}" class="btn btn-sm btn-danger">
                                         <i class="fas fa-undo-alt"></i> Recall
                                     </a>
+                                    @endif
                                 </td>
                             </tr>
                             @php $reciving_history_total += $reciving_history->value; @endphp
