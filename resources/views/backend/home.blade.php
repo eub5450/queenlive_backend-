@@ -769,10 +769,12 @@ Admin Dashboard |
         <span>Game Profit</span>
         <strong>{{ $game_profit_total ?? 0 }}</strong>
       </div>
+      @if($adminCan('dashboard_profit_loss'))
       <div class="dashboard-summary-card summary-rose">
         <span>Profit / Loss</span>
         <strong>{{ round($loss_profit) }}</strong>
       </div>
+      @endif
     </div>
 
     <div class="dashboard-summary-grid">
@@ -846,10 +848,12 @@ Admin Dashboard |
         <span>Coin Metrics</span>
         <strong>{{ $total_coin_beg }}</strong>
       </div>
+      @if($adminCan('dashboard_game_pro_balance'))
       <div class="dashboard-summary-card summary-purple">
         <span>Game Pro Balance</span>
         <strong>{{ $game_pro_balance ?? 0 }}</strong>
       </div>
+      @endif
       <div class="dashboard-summary-card summary-rose">
         <span>Today Transactions</span>
         <strong>{{ $today_portal_transfer }}</strong>
@@ -870,22 +874,28 @@ Admin Dashboard |
         <span>Portal Send</span>
         <strong>{{ $protal_sand }}</strong>
       </div>
+      @if($adminCan('dashboard_total_serve_coin'))
       <div class="dashboard-summary-card summary-gold">
         <span>Total Serve Coin</span>
         <strong>{{ $total_serve }}</strong>
       </div>
+      @endif
       <div class="dashboard-summary-card summary-purple">
         <span>Total Receiving</span>
         <strong>{{ $total_gift }}</strong>
       </div>
+      @if($adminCan('dashboard_coin_generate_game'))
       <div class="dashboard-summary-card summary-teal">
         <span>Coin Generation</span>
         <strong>{{ ($total_portal_recharge-($total_portal_transfer+$total_portal_recall))+$protal_sand }}</strong>
       </div>
+      @endif
+      @if($adminCan('dashboard_profit_loss'))
       <div class="dashboard-summary-card {{ $loss_profit > 0 ? 'summary-green' : 'summary-red' }}">
         <span>Profit / Loss</span>
         <strong>{{ round($loss_profit) }}</strong>
       </div>
+      @endif
     </div>
   </div>
 
@@ -948,6 +958,7 @@ Admin Dashboard |
       </div>
     </div>
     
+    @if($adminCan('dashboard_game_pro_balance'))
     <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
       <div class="status-card minimizable-card" data-minimized="true">
         <div class="status-card-header" style="background: linear-gradient(135deg, #00c6ff 0%, #0072ff 48%, #6a11cb 100%);">
@@ -966,7 +977,8 @@ Admin Dashboard |
         </div>
       </div>
     </div>
-    
+    @endif
+
     <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
       <div class="status-card minimizable-card" data-minimized="true">
         <div class="status-card-header card-warning">
@@ -1070,6 +1082,7 @@ Admin Dashboard |
 
   <!-- Third Row of Status Cards -->
   <div class="row">
+    @if($adminCan('dashboard_total_serve_coin'))
     <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
       <div class="status-card minimizable-card" data-minimized="true">
         <div class="status-card-header card-success">
@@ -1088,7 +1101,8 @@ Admin Dashboard |
         </div>
       </div>
     </div>
-    
+    @endif
+
     <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
       <div class="status-card minimizable-card" data-minimized="true">
         <div class="status-card-header card-warning">
@@ -1108,6 +1122,7 @@ Admin Dashboard |
       </div>
     </div>
     
+    @if($adminCan('dashboard_coin_generate_game'))
     <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
       <div class="status-card minimizable-card" data-minimized="true">
         <div class="status-card-header card-purple">
@@ -1126,7 +1141,9 @@ Admin Dashboard |
         </div>
       </div>
     </div>
-    
+    @endif
+
+    @if($adminCan('dashboard_profit_loss'))
     <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
       <div class="status-card minimizable-card" data-minimized="true">
         <div class="status-card-header card-danger">
@@ -1147,6 +1164,7 @@ Admin Dashboard |
         </div>
       </div>
     </div>
+    @endif
   </div>
 
   @if($adminCan('dashboard_realtime_feeds'))
