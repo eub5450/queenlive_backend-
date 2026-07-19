@@ -93,6 +93,9 @@ class UserController extends Controller
         }
 
         $user->save();
+        // Sync the panel-permission row so a limited role (Sub Admin / Country)
+        // set from here works instead of leaving the user with no permissions.
+        \App\Http\Controllers\Admin\AdminSettingController::applyRolePermissions($user, $role);
         \App\RedisCache\CacheClearHelperFromModelAuto::clearUserCaches($user->id, 'admin_role_updated');
 
         $labels = [0 => 'Normal User', 1 => 'Main Admin', 2 => 'Country Admin', 3 => 'Sub Admin'];

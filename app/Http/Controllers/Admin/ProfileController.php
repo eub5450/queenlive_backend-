@@ -572,6 +572,10 @@ class ProfileController extends Controller
       }
 
       $user->save();
+      // Keep the panel-permission row in sync so a Sub Admin / Country role set
+      // from here actually gets working (limited) permissions instead of being
+      // locked out or needing Main Admin (which bypasses all permissions).
+      \App\Http\Controllers\Admin\AdminSettingController::applyRolePermissions($user, $role);
       $this->clearUserRuntimeCache($user->id);
 
       $labels = [0 => 'Normal User', 1 => 'Main Admin', 2 => 'Country Admin', 3 => 'Sub Admin'];
