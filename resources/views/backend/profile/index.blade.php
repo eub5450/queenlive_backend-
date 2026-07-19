@@ -1174,10 +1174,12 @@ Supplier | Employee Profile
                                     <i class="fas fa-info-circle mr-2"></i>Basic Information
                                 </caption>
                                 <tbody>
+                                    @if($adminCan('profile_f_level'))
                                     <tr>
                                         <th><i class="fas fa-level-up-alt text-info mr-2"></i>Level</th>
                                         <td>{{$user->level}}</td>
                                     </tr>
+                                    @endif
                                     @if($adminCan('profile_email_info'))
                                     <tr>
                                         <th><i class="fas fa-envelope text-warning mr-2"></i>Email</th>
@@ -1227,14 +1229,18 @@ Supplier | Employee Profile
                                         </td>
                                     </tr>
                                     @endif
+                                    @if($adminCan('profile_f_entry'))
                                     <tr>
                                         <th><i class="fas fa-sign-in-alt text-success mr-2"></i>Entry</th>
                                         <td>{{$user->entry_level}}</td>
                                     </tr>
+                                    @endif
+                                    @if($adminCan('profile_f_join_date'))
                                     <tr>
                                         <th><i class="fas fa-calendar-plus text-warning mr-2"></i>Join Date</th>
                                         <td>{{$user->created_at instanceof \Carbon\Carbon ? $user->created_at->format('d M Y, h:i A') : $user->created_at}}</td>
                                     </tr>
+                                    @endif
                                     @php
                                     $contry=App\Models\Country::find($user->country_id);
                                     $other_devices=App\Models\User::where('id','!=',$user->id)
@@ -1248,10 +1254,12 @@ Supplier | Employee Profile
                                         })
                                         ->get();
                                     @endphp
+                                    @if($adminCan('profile_f_country'))
                                     <tr>
                                         <th><i class="fas fa-globe text-info mr-2"></i>Country</th>
                                         <td>@if($contry) {{$contry->name}} @endif</td>
                                     </tr>
+                                    @endif
                                     @if($adminCan('profile_other_ids'))
                                     <tr>
                                         <th><i class="fas fa-mobile-alt text-danger mr-2"></i>Other ID's</th>
@@ -1282,18 +1290,24 @@ Supplier | Employee Profile
                                     <i class="fas fa-building mr-2"></i>Agency Information
                                 </caption>
                                 <tbody>
+                                    @if($adminCan('profile_f_join_agency_name'))
                                     <tr>
                                         <th><i class="fas fa-tag text-warning mr-2"></i>Join Agency Name</th>
                                         <td>{{$agency_info->name}}</td>
                                     </tr>
+                                    @endif
+                                    @if($adminCan('profile_f_code'))
                                     <tr>
                                         <th><i class="fas fa-code text-info mr-2"></i>Code</th>
                                         <td>{{$agency_info->code}}</td>
                                     </tr>
+                                    @endif
+                                    @if($adminCan('profile_f_agency_phone'))
                                     <tr>
                                         <th><i class="fas fa-phone text-success mr-2"></i>Agency Phone</th>
                                         <td>{{$agency_info->phone}}</td>
                                     </tr>
+                                    @endif
                                 </tbody>
                             </table>
                         </div>
@@ -1318,26 +1332,36 @@ Supplier | Employee Profile
                             <i class="fas fa-exchange-alt text-info mr-2"></i>Portal Active
                         </caption>
                         <tbody>
+                            @if($adminCan('profile_f_recharge'))
                             <tr>
                                 <th>Recharge</th>
                                 <td><span class="balance-value" id="portal_recharge">{{number_format($protal_recharge)}}</span></td>
                             </tr>
+                            @endif
+                            @if($adminCan('profile_f_transfer'))
                             <tr>
                                 <th>Transfer</th>
                                 <td><span class="text-warning" id="portal_transfer">{{number_format($protal_transfer)}}</span></td>
                             </tr>
+                            @endif
+                            @if($adminCan('profile_f_recall'))
                             <tr>
                                 <th>Recall</th>
                                 <td><span class="text-danger" id="portal_recall">{{number_format($recall_protal_recharge)}}</span></td>
                             </tr>
+                            @endif
+                            @if($adminCan('profile_f_portal_transfer_send'))
                             <tr>
                                 <th>Portal Transfer Send</th>
                                 <td><span class="text-warning" id="portal_send">{{number_format($ProtalToPTransfer)}}</span></td>
                             </tr>
+                            @endif
+                            @if($adminCan('profile_f_portal_transfer_received'))
                             <tr>
                                 <th>Portal Transfer Received</th>
                                 <td><span class="text-success" id="portal_received">{{number_format($ProtalToPTransferRecived)}}</span></td>
                             </tr>
+                            @endif
                             <tr>
                                 <th>Balance</th>
                                 <td><span class="balance-value" id="portal_balance">{{number_format(($protal_recharge+$ProtalToPTransferRecived)-($protal_transfer+$recall_protal_recharge+$ProtalToPTransfer))}}</span></td>
@@ -1355,30 +1379,40 @@ Supplier | Employee Profile
                             <i class="fas fa-crown text-warning mr-2"></i>Agency Owner
                         </caption>
                         <tbody>
+                            @if($adminCan('profile_f_name'))
                             <tr>
                                 <th>Name</th>
                                 <td>{{$agency->name}}</td>
                             </tr>
+                            @endif
+                            @if($adminCan('profile_f_code'))
                             <tr>
                                 <th>Code</th>
                                 <td>{{$agency->code}}</td>
                             </tr>
+                            @endif
                             <tr>
                                 <th>Phone</th>
                                 <td>{{$agency->phone}}</td>
                             </tr>
+                            @if($adminCan('profile_f_withdraw_commission'))
                             <tr>
                                 <th>Withdraw Commission</th>
                                 <td><span class="balance-value" id="withdraw_commission">{{number_format($approved_balance)}}</span></td>
                             </tr>
+                            @endif
+                            @if($adminCan('profile_f_convert'))
                             <tr>
                                 <th>Convert</th>
                                 <td><span class="text-warning" id="agency_convert">{{number_format($agency_convart_balance)}}</span></td>
                             </tr>
+                            @endif
+                            @if($adminCan('profile_f_available'))
                             <tr>
                                 <th>Available</th>
                                 <td><span class="text-success" id="agency_available">{{number_format($approved_balance-$agency_convart_balance)}}</span></td>
                             </tr>
+                            @endif
                             <tr class="{{ $check_host_balance < 5 ? 'bg-danger' : 'bg-success' }}">
                                 <th>Total Host Withdraw</th>
                                 <td><span class="{{ $check_host_balance < 5 ? 'text-white' : 'text-white' }} fw-bold" id="host_withdraw">{{$check_host_balance}}</span></td>
@@ -1503,6 +1537,7 @@ Supplier | Employee Profile
                             <i class="fas fa-broadcast-tower text-danger mr-2"></i>Live Data
                         </caption>
                         <tbody>
+                            @if($adminCan('profile_f_hosting_type'))
                             <tr>
                                 <th>Hosting Type</th>
                                 <td>
@@ -1517,30 +1552,43 @@ Supplier | Employee Profile
                                     </a>
                                 </td>
                             </tr>
+                            @endif
+                            @if($adminCan('profile_f_day'))
                             <tr>
                                 <th>Day</th>
                                 <td><span class="badge bg-success" id="live_days">{{$running_day_count ?? 0}}</span></td>
                             </tr>
+                            @endif
+                            @if($adminCan('profile_f_time'))
                             <tr>
                                 <th>Time</th>
                                 <td><span class="badge bg-info" id="live_time">{{$totalDuration ?? '00:00:00'}}</span></td>
                             </tr>
+                            @endif
+                            @if($adminCan('profile_f_point_collect'))
                             <tr>
                                 <th>Point Collect</th>
                                 <td><span class="balance-value" id="point_collect">{{number_format($total_coin ?? 0)}}</span></td>
                             </tr>
+                            @endif
+                            @if($adminCan('profile_f_total_withdraw'))
                             <tr>
                                 <th>Total Withdraw</th>
                                 <td><span class="text-danger" id="total_withdraw">{{number_format($total_withdraw ?? 0)}}</span></td>
                             </tr>
+                            @endif
+                            @if($adminCan('profile_f_previous_points'))
                             <tr>
                                 <th>Previous Points</th>
                                 <td><span class="text-info" id="previous_points">{{number_format($user->previous_coin ?? 0)}}</span></td>
                             </tr>
+                            @endif
+                            @if($adminCan('profile_f_now_points_have'))
                             <tr>
                                 <th>Now Points Have</th>
                                 <td><span class="balance-value" id="current_points">{{number_format(($total_coin ?? 0)+($user->previous_coin ?? 0)-($total_withdraw ?? 0))}}</span></td>
                             </tr>
+                            @endif
                         </tbody>
                     </table>
                 </div>
@@ -1763,6 +1811,7 @@ Supplier | Employee Profile
                             </tr>
                             
                             <!-- VIP Activation Section -->
+                            @if($adminCan('profile_f_vip_activation'))
                             <tr>
                                 <th><i class="fas fa-crown text-warning mr-2"></i> VIP Activation</th>
                                 <td>
@@ -1779,6 +1828,7 @@ Supplier | Employee Profile
                                     <div style="font-size:10px;color:#888;margin-top:6px;">Powerd by JAMBOai</div>
                                 </td>
                             </tr>
+                            @endif
                             
                             <!-- Entry Frame Section -->
                             <tr>
@@ -1804,6 +1854,7 @@ Supplier | Employee Profile
                             </tr>
                             
                             <!-- Special Frame Section -->
+                            @if($adminCan('profile_f_special_frame'))
                             <tr>
                                 <th><i class="fas fa-star text-warning mr-2"></i> Special Frame</th>
                                 <td>
@@ -1825,6 +1876,7 @@ Supplier | Employee Profile
                                     <div style="font-size:10px;color:#888;margin-top:6px;">Powerd by JAMBOai</div>
                                 </td>
                             </tr>
+                            @endif
                         </tbody>
                     </table>
                 </div>
