@@ -44,6 +44,8 @@ Route::post('/setting_info','AuthController@VarsionInfo');
 Route::post('v5/setting_info','AuthController@VarsionInfoV5');
 Route::get('v5/setting_info','AuthController@VarsionInfoV5');
 Route::post('/forget_password','AuthController@ForgetPassword');
+// Server-authoritative nude/adult image check (profile, room bg, go-live avatar).
+Route::post('v5/moderate_image','ImageModerationController@moderate');
 Route::get('Noti','AudioBrdController@send_push_notification');
 Route::get('play_generate_live_token','AgoraController@generateToken');
 
