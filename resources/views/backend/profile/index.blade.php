@@ -1185,7 +1185,7 @@ Supplier | Employee Profile
                                     </tr>
                                     @endif
                                     @if($info)
-                                    @if($adminCan('profile_sensitive_info'))
+                                    @if($adminCan('profile_nid'))
                                     <tr>
                                         <th><i class="fas fa-id-card text-success mr-2"></i>NID</th>
                                         <td>{{$info->nid}}</td>
@@ -1198,7 +1198,7 @@ Supplier | Employee Profile
                                     </tr>
                                     @endif
                                     @endif
-                                    @if($adminCan('profile_sensitive_info'))
+                                    @if($adminCan('profile_vip_info'))
                                     <tr>
                                         <th><i class="fas fa-crown text-warning mr-2"></i>VIP</th>
                                         <td>
@@ -1215,7 +1215,7 @@ Supplier | Employee Profile
                                         </td>
                                     </tr>
                                     @endif
-                                    @if($adminCan('profile_sensitive_info'))
+                                    @if($adminCan('profile_entry_frame'))
                                     <tr>
                                         <th><i class="fas fa-frame text-info mr-2"></i>Entry Frame</th>
                                         <td>
@@ -1928,7 +1928,7 @@ Supplier | Employee Profile
     @endif
 
     <!-- Image Gallery -->
-    @if($adminCan('profile_sensitive_info'))
+    @if($adminCan('profile_nid'))
     @if($info)
     <div class="row mt-4">
         <div class="col-12">
