@@ -757,18 +757,24 @@ Admin Dashboard |
     </div>
 
     <div class="dashboard-summary-grid">
+      @if($adminCan('dashboard_total_users'))
       <div class="dashboard-summary-card summary-blue">
         <span>Total Users</span>
         <strong>{{ $total_users }}</strong>
       </div>
+      @endif
+      @if($adminCan('dashboard_user_wallets'))
       <div class="dashboard-summary-card summary-green">
         <span>User Wallets</span>
         <strong>{{ $users_balance }}</strong>
       </div>
+      @endif
+      @if($adminCan('dashboard_game_profit'))
       <div class="dashboard-summary-card summary-gold">
         <span>Game Profit</span>
         <strong>{{ $game_profit_total ?? 0 }}</strong>
       </div>
+      @endif
       @if($adminCan('dashboard_profit_loss'))
       <div class="dashboard-summary-card summary-rose">
         <span>Profit / Loss</span>
@@ -778,22 +784,30 @@ Admin Dashboard |
     </div>
 
     <div class="dashboard-summary-grid">
+      @if($adminCan('dashboard_today_recharge'))
       <div class="dashboard-summary-card summary-blue">
         <span>Today Recharge</span>
         <strong>{{ $today_portal_transfer }}</strong>
       </div>
+      @endif
+      @if($adminCan('dashboard_today_sending'))
       <div class="dashboard-summary-card summary-green">
         <span>Today Sending</span>
         <strong>{{ $today_sanding }}</strong>
       </div>
+      @endif
+      @if($adminCan('dashboard_today_receiving'))
       <div class="dashboard-summary-card summary-gold">
         <span>Today Receiving</span>
         <strong>{{ $today_reciving }}</strong>
       </div>
+      @endif
+      @if($adminCan('dashboard_today_gift'))
       <div class="dashboard-summary-card summary-rose">
         <span>Today Gift Sum</span>
         <strong>{{ $today_gift_sum }}</strong>
       </div>
+      @endif
     </div>
 
     <div class="profit-breakdown-grid" id="dashboard-game-profit">
@@ -836,54 +850,72 @@ Admin Dashboard |
     </div>
 
     <div class="dashboard-summary-grid metric-summary-grid" id="dashboard-all-summary-cards">
+      @if($adminCan('dashboard_withdraw_commission'))
       <div class="dashboard-summary-card summary-blue">
         <span>Withdraw Commission</span>
         <strong>{{ $approved_balance }}</strong>
       </div>
+      @endif
+      @if($adminCan('dashboard_users_agents'))
       <div class="dashboard-summary-card summary-green">
         <span>Users & Agents</span>
         <strong>{{ $total_users }}</strong>
       </div>
+      @endif
+      @if($adminCan('dashboard_coin_metrics'))
       <div class="dashboard-summary-card summary-gold">
         <span>Coin Metrics</span>
         <strong>{{ $total_coin_beg }}</strong>
       </div>
+      @endif
       @if($adminCan('dashboard_game_pro_balance'))
       <div class="dashboard-summary-card summary-purple">
         <span>Game Pro Balance</span>
         <strong>{{ $game_pro_balance ?? 0 }}</strong>
       </div>
       @endif
+      @if($adminCan('dashboard_today_transactions'))
       <div class="dashboard-summary-card summary-rose">
         <span>Today Transactions</span>
         <strong>{{ $today_portal_transfer }}</strong>
       </div>
+      @endif
+      @if($adminCan('dashboard_user_wallets'))
       <div class="dashboard-summary-card summary-teal">
         <span>User Wallets</span>
         <strong>{{ $users_balance }}</strong>
       </div>
+      @endif
+      @if($adminCan('dashboard_withdraw_profit'))
       <div class="dashboard-summary-card summary-slate">
         <span>Withdraw Profit</span>
         <strong>{{ $withdraw_app_profit_today }}</strong>
       </div>
+      @endif
+      @if($adminCan('dashboard_portal_balance'))
       <div class="dashboard-summary-card summary-blue">
         <span>Portal Balance</span>
         <strong>{{ $total_portal_recharge-($total_portal_transfer+$total_portal_recall) }}</strong>
       </div>
+      @endif
+      @if($adminCan('dashboard_portal_send'))
       <div class="dashboard-summary-card summary-green">
         <span>Portal Send</span>
         <strong>{{ $protal_sand }}</strong>
       </div>
+      @endif
       @if($adminCan('dashboard_total_serve_coin'))
       <div class="dashboard-summary-card summary-gold">
         <span>Total Serve Coin</span>
         <strong>{{ $total_serve }}</strong>
       </div>
       @endif
+      @if($adminCan('dashboard_total_receiving'))
       <div class="dashboard-summary-card summary-purple">
         <span>Total Receiving</span>
         <strong>{{ $total_gift }}</strong>
       </div>
+      @endif
       @if($adminCan('dashboard_coin_generate_game'))
       <div class="dashboard-summary-card summary-teal">
         <span>Coin Generation</span>
@@ -901,6 +933,7 @@ Admin Dashboard |
 
   <!-- Financial Summary Cards - All will be minimizable -->
   <div class="row">
+    @if($adminCan('dashboard_withdraw_commission'))
     <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
       <div class="status-card minimizable-card" data-minimized="true">
         <div class="status-card-header card-primary">
@@ -919,7 +952,9 @@ Admin Dashboard |
         </div>
       </div>
     </div>
+    @endif
     
+    @if($adminCan('dashboard_users_agents'))
     <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
       <div class="status-card minimizable-card" data-minimized="true">
         <div class="status-card-header card-info">
@@ -938,7 +973,9 @@ Admin Dashboard |
         </div>
       </div>
     </div>
+    @endif
     
+    @if($adminCan('dashboard_coin_metrics'))
     <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
       <div class="status-card minimizable-card" data-minimized="true">
         <div class="status-card-header card-success">
@@ -957,6 +994,7 @@ Admin Dashboard |
         </div>
       </div>
     </div>
+    @endif
     
     @if($adminCan('dashboard_game_pro_balance'))
     <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
@@ -979,6 +1017,7 @@ Admin Dashboard |
     </div>
     @endif
 
+    @if($adminCan('dashboard_today_transactions'))
     <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
       <div class="status-card minimizable-card" data-minimized="true">
         <div class="status-card-header card-warning">
@@ -997,10 +1036,12 @@ Admin Dashboard |
         </div>
       </div>
     </div>
+    @endif
   </div>
 
   <!-- Second Row of Status Cards -->
   <div class="row">
+    @if($adminCan('dashboard_user_wallets'))
     <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
       <div class="status-card minimizable-card" data-minimized="true">
         <div class="status-card-header card-purple">
@@ -1021,7 +1062,9 @@ Admin Dashboard |
         </div>
       </div>
     </div>
+    @endif
     
+    @if($adminCan('dashboard_withdraw_profit'))
     <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
       <div class="status-card minimizable-card" data-minimized="true">
         <div class="status-card-header card-teal">
@@ -1040,7 +1083,9 @@ Admin Dashboard |
         </div>
       </div>
     </div>
+    @endif
     
+    @if($adminCan('dashboard_portal_balance'))
     <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
       <div class="status-card minimizable-card" data-minimized="true">
         <div class="status-card-header card-info">
@@ -1059,7 +1104,9 @@ Admin Dashboard |
         </div>
       </div>
     </div>
+    @endif
     
+    @if($adminCan('dashboard_portal_send'))
     <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
       <div class="status-card minimizable-card" data-minimized="true">
         <div class="status-card-header card-primary">
@@ -1078,6 +1125,7 @@ Admin Dashboard |
         </div>
       </div>
     </div>
+    @endif
   </div>
 
   <!-- Third Row of Status Cards -->
@@ -1103,6 +1151,7 @@ Admin Dashboard |
     </div>
     @endif
 
+    @if($adminCan('dashboard_total_receiving'))
     <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
       <div class="status-card minimizable-card" data-minimized="true">
         <div class="status-card-header card-warning">
@@ -1121,6 +1170,7 @@ Admin Dashboard |
         </div>
       </div>
     </div>
+    @endif
     
     @if($adminCan('dashboard_coin_generate_game'))
     <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
