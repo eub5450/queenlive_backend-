@@ -15,13 +15,28 @@ class HostController extends Controller
 {
     public function index()
     {
-        $users=User::where('is_host_id',1)->where('status',1)->orderby('id','desc')->get();
-        return view('backend.host.index',compact('users'));
+        $countryId = (int)(\Auth::user()->is_admin ?? 0) === 2
+            ? (int)(\Auth::user()->country_id ?? 0)
+            : null;
+
+        $users = User::where('is_host_id', 1)->where('status', 1)
+            ->when($countryId, fn($q) => $q->where('country_id', $countryId))
+            ->orderby('id', 'desc')->get();
+        return view('backend.host.index', compact('users'));
     }
     public function Pending()
     {
-        $users=DB::table('users')->join('host_data','host_data.user_id','users.id')->select('users.*','host_data.country_id')->where('users.is_host_id',2)->where('users.status',1)->orderby('host_data.id','desc')->get();
-        return view('backend.host.pending_host',compact('users'));
+        $countryId = (int)(\Auth::user()->is_admin ?? 0) === 2
+            ? (int)(\Auth::user()->country_id ?? 0)
+            : null;
+
+        $users = DB::table('users')->join('host_data', 'host_data.user_id', 'users.id')
+            ->select('users.*', 'host_data.country_id')
+            ->where('users.is_host_id', 2)
+            ->where('users.status', 1)
+            ->when($countryId, fn($q) => $q->where('users.country_id', $countryId))
+            ->orderby('host_data.id', 'desc')->get();
+        return view('backend.host.pending_host', compact('users'));
     }
     public function LuckyStarPending()
     {
@@ -129,9 +144,17 @@ class HostController extends Controller
     }
     public function Tranfer()
     {
-        $users=User::where('is_host_id',1)->where('status',1)->orderby('id','desc')->get();
-        $agencys=Agency::orderby('id','desc')->get();
-        return view('backend.host.transfer',compact('users','agencys'));
+        $countryId = (int)(\Auth::user()->is_admin ?? 0) === 2
+            ? (int)(\Auth::user()->country_id ?? 0)
+            : null;
+
+        $users = User::where('is_host_id', 1)->where('status', 1)
+            ->when($countryId, fn($q) => $q->where('country_id', $countryId))
+            ->orderby('id', 'desc')->get();
+        $agencys = Agency::orderby('id', 'desc')
+            ->when($countryId, fn($q) => $q->where('country_id', $countryId))
+            ->get();
+        return view('backend.host.transfer', compact('users', 'agencys'));
     }
     public function AgencyInfo($id)
     {

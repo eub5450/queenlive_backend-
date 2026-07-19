@@ -82,6 +82,18 @@
                                     </div>
                                 </div>
 
+                                <div class="jambo-panel" style="margin-bottom:16px;">
+                                    <div class="jambo-panel-head"><h5>Role Permission Presets</h5><span class="perm-chip">Default permissions per role</span></div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-4"><div style="background:#e8f5e9;border-radius:8px;padding:10px;"><b style="color:#1b5e20;">Admin</b><div style="font-size:12px;color:#388e3c;margin-top:3px;">All {{count($adminPreset)}} permissions · full access</div></div></div>
+                                            <div class="col-md-4"><div style="background:#fff3e0;border-radius:8px;padding:10px;"><b style="color:#e65100;">Country Admin</b><div style="font-size:12px;color:#f57c00;margin-top:3px;">{{count($countryAdminPreset ?? [])}} permissions · scoped to assigned country only</div></div></div>
+                                            <div class="col-md-4"><div style="background:#e3f2fd;border-radius:8px;padding:10px;"><b style="color:#0d47a1;">Sub Admin</b><div style="font-size:12px;color:#1565c0;margin-top:3px;">{{count($subadminPreset)}} permissions · limited access</div></div></div>
+                                        </div>
+                                        <p style="font-size:11px;color:#999;margin:8px 0 0;">Presets apply automatically when assigning roles. Add extra per-user permissions using the form below.</p>
+                                    </div>
+                                </div>
+
                                 <div class="jambo-panel">
                                     <div class="jambo-panel-head">
                                         <h5>Add or Update Admin</h5>
@@ -109,6 +121,7 @@
                                             <div class="preset-row">
                                                 <button type="button" class="btn btn-xs btn-success js-permission-preset" data-preset="admin" data-mode="admin">Admin Full</button>
                                                 <button type="button" class="btn btn-xs btn-info js-permission-preset" data-preset="subadmin" data-mode="subadmin">Sub Admin Basic</button>
+                                                <button type="button" class="btn btn-xs btn-warning js-permission-preset" data-preset="country">Country Admin</button>
                                                 <button type="button" class="btn btn-xs btn-default js-permission-preset" data-preset="clear">Clear All</button>
                                             </div>
                                             <details class="jambo-permission-panel" open>
@@ -116,8 +129,11 @@
                                                 <div class="jambo-permission-body">
                                                     <div class="permission-grid">
                                                         @foreach($permissionGroups as $groupName => $items)
-                                                            <div class="permission-box">
-                                                                <h5>{{$groupName}}</h5>
+                                                            <div class="permission-box" data-group="{{ Str::slug($groupName) }}">
+                                                                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                                                                    <h5 style="margin:0;">{{$groupName}}</h5>
+                                                                    <button type="button" class="btn btn-xs btn-default js-group-toggle" data-group="{{ Str::slug($groupName) }}" style="font-size:10px;padding:2px 6px;">All</button>
+                                                                </div>
                                                                 @foreach($items as $key => $label)
                                                                     <label class="permission-item"><input type="checkbox" name="permissions[]" value="{{$key}}"><span>{{$label}}</span></label>
                                                                 @endforeach
@@ -160,6 +176,9 @@
                                                             <span class="access-badge">{{$modeLabels[$mode] ?? $mode}}</span>
                                                             <div style="margin-top:5px;color:#64748b;font-size:12px;">DB is_admin={{(int)$user->is_admin}}</div>
                                                             <div style="margin-top:5px;color:#64748b;font-size:12px;">Country ID={{(int)$user->country_id}}</div>
+                                                            @if((int)$user->is_admin === 2 && $user->country_id)
+                                                            <span style="background:#fff3e0;color:#e65100;border-radius:10px;padding:2px 7px;font-size:11px;font-weight:600;display:inline-block;margin-top:2px;">Country: {{$user->country->name ?? 'ID '.$user->country_id}}</span>
+                                                            @endif
                                                             <div style="margin-top:8px;"><span class="perm-chip">{{count($selected)}} permissions on</span></div>
                                                         </td>
                                                         <td>
@@ -184,6 +203,7 @@
                                                                 <div class="preset-row">
                                                                     <button type="button" class="btn btn-xs btn-success js-permission-preset" data-preset="admin" data-mode="admin">Admin Full</button>
                                                                     <button type="button" class="btn btn-xs btn-info js-permission-preset" data-preset="subadmin" data-mode="subadmin">Sub Admin Basic</button>
+                                                                    <button type="button" class="btn btn-xs btn-warning js-permission-preset" data-preset="country">Country Admin</button>
                                                                     <button type="button" class="btn btn-xs btn-default js-permission-preset" data-preset="clear">Clear All</button>
                                                                 </div>
                                                                 <details class="jambo-permission-panel">
@@ -191,8 +211,8 @@
                                                                     <div class="jambo-permission-body">
                                                                         <div class="permission-grid">
                                                                             @foreach($permissionGroups as $groupName => $items)
-                                                                                <div class="permission-box">
-                                                                                    <h5>{{$groupName}}</h5>
+                                                                                <div class="permission-box" data-group="{{ Str::slug($groupName) }}">
+                                                                                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;"><h5 style="margin:0;">{{$groupName}}</h5><button type="button" class="btn btn-default btn-xs js-group-toggle" data-group="{{ Str::slug($groupName) }}" style="font-size:10px;padding:1px 6px;">All</button></div>
                                                                                     @foreach($items as $key => $label)
                                                                                         <label class="permission-item"><input type="checkbox" name="permissions[]" value="{{$key}}" @if(in_array($key, $selected, true)) checked @endif><span>{{$label}}</span></label>
                                                                                     @endforeach
@@ -228,7 +248,7 @@
 </div>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    var presets = {admin: @json($adminPreset), subadmin: @json($subadminPreset), clear: []};
+    var presets = {admin: @json($adminPreset), subadmin: @json($subadminPreset), country: @json($countryAdminPreset ?? []), clear: []};
     document.querySelectorAll('.js-permission-preset').forEach(function (button) {
         button.addEventListener('click', function () {
             var form = button.closest('form');
@@ -241,6 +261,17 @@ document.addEventListener('DOMContentLoaded', function () {
             form.querySelectorAll('input[name="permissions[]"]').forEach(function (cb) {
                 cb.checked = selected.indexOf(cb.value) !== -1;
             });
+        });
+    });
+
+    document.querySelectorAll('.js-group-toggle').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var group = btn.getAttribute('data-group');
+            var form = btn.closest('form');
+            if (!form) return;
+            var boxes = form.querySelectorAll('.permission-box[data-group="' + group + '"] input[type="checkbox"]');
+            var anyUnchecked = Array.prototype.some.call(boxes, function(cb) { return !cb.checked; });
+            boxes.forEach(function(cb) { cb.checked = anyUnchecked; });
         });
     });
 

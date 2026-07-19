@@ -154,6 +154,11 @@ class UserLive extends Model
 //         // Optional: Log cache clearing for debugging
 //         // Log::info("UserLive caches cleared for user: {$userId}, channel: {$channelName}");
 //     }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
     public function liveCalls()
     {
         return $this->hasMany(LiveCall::class, 'host_id', 'user_id');

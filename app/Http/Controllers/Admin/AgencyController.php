@@ -78,8 +78,14 @@ class AgencyController extends Controller
     }
     public function Index()
     {
-        $agencys=Agency::orderby('id','desc')->get();
-        return view('backend.agency.index',compact('agencys'));
+        $countryId = (int)(\Auth::user()->is_admin ?? 0) === 2
+            ? (int)(\Auth::user()->country_id ?? 0)
+            : null;
+
+        $agencys = Agency::orderby('id', 'desc')
+            ->when($countryId, fn($q) => $q->where('country_id', $countryId))
+            ->get();
+        return view('backend.agency.index', compact('agencys'));
     }
     public function AgencyOff($id)
     {

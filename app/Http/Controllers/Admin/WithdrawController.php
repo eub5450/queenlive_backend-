@@ -11,11 +11,16 @@ class WithdrawController extends Controller
 {
    public function Index()
    {
+        $countryId = (int)(\Auth::user()->is_admin ?? 0) === 2
+            ? (int)(\Auth::user()->country_id ?? 0)
+            : null;
+
         $start_date = date('Y-m') . '-01';
         $end_date = date('Y-m') . '-31';
         $data = Withdraw::orderBy('id', 'desc')
             ->whereDate('date', '>=', $start_date)
             ->whereDate('date', '<=', $end_date)
+            ->when($countryId, fn($q) => $q->whereHas('host', fn($u) => $u->where('country_id', $countryId)))
             ->get();
 
         $users = User::whereIn('id', $data->pluck('host_id')->filter()->unique()->values())

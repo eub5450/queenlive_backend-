@@ -21,7 +21,13 @@ class LiveController extends Controller
 
     public function Index()
     {
-        $lives = UserLive::orderBy('id', 'desc')->get();
+        $countryId = (int)(\Auth::user()->is_admin ?? 0) === 2
+            ? (int)(\Auth::user()->country_id ?? 0)
+            : null;
+
+        $lives = UserLive::orderBy('id', 'desc')
+            ->when($countryId, fn($q) => $q->whereHas('user', fn($u) => $u->where('country_id', $countryId)))
+            ->get();
         $seatStats = $this->buildSeatStats($lives);
 
         return view('backend.live.index', compact('lives', 'seatStats'));

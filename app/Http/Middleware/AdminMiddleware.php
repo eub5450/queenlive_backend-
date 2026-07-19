@@ -148,9 +148,9 @@ class AdminMiddleware
             'admin/fun-sticker' => ['sidebar_menu_setting', 'sidebar_setting_fun_sticker'],
             'admin/setting/fun-sticker' => ['sidebar_menu_setting', 'sidebar_setting_fun_sticker'],
             'admin/fun-sticker-save' => ['sidebar_menu_setting', 'sidebar_setting_fun_sticker'],
-            'invisibal' => ['sidebar_menu_ban', 'sidebar_ban_id'],
-            'official_id' => ['sidebar_menu_ban', 'sidebar_ban_id'],
-            'official_id_active' => ['sidebar_menu_ban', 'sidebar_ban_id'],
+            'invisibal' => ['sidebar_menu_ban', 'sidebar_invisible_id'],
+            'official_id' => ['sidebar_menu_ban', 'sidebar_official_id'],
+            'official_id_active' => ['sidebar_menu_ban', 'sidebar_official_id'],
             'admin/game_pattern_reverse' => ['sidebar_menu_game_control'],
             'admin/game_minus_status' => ['sidebar_menu_game_control'],
             'setting/admin-delete' => ['sidebar_menu_setting', 'sidebar_setting_admin', 'setting_admin_manage'],
@@ -235,8 +235,8 @@ class AdminMiddleware
 
             // --- role-system hardening: previously-unmapped admin route prefixes ---
             'admin/level-setting' => ['sidebar_menu_setting', 'sidebar_setting_level'],
-            'invisible_id_reject/' => ['sidebar_menu_ban', 'sidebar_ban_id'],
-            'official_id_reject/' => ['sidebar_menu_ban', 'sidebar_ban_id'],
+            'invisible_id_reject/' => ['sidebar_menu_ban', 'sidebar_invisible_id'],
+            'official_id_reject/' => ['sidebar_menu_ban', 'sidebar_official_id'],
             'support_replay/' => ['sidebar_menu_support', 'sidebar_support_index'],
             'id_device_banned/' => ['sidebar_menu_ban', 'sidebar_ban_id'],
         ];

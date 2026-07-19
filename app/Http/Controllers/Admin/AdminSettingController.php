@@ -29,12 +29,22 @@ class AdminSettingController extends Controller
             'Sidebar Support' => ['sidebar_menu_support' => 'Support Parent Menu', 'sidebar_support_index' => 'Support'],
             'Sidebar Ranking' => ['sidebar_menu_ranking' => 'Ranking Parent Menu', 'sidebar_ranking_list' => 'Ranking'],
             'Sidebar Finance' => ['sidebar_menu_user_balance' => 'User Balance Parent Menu', 'sidebar_user_balance_wallet' => 'Wallet'],
-            'Sidebar Moderation' => ['sidebar_menu_ban' => 'Ban ID Parent Menu', 'sidebar_ban_id' => 'Ban', 'sidebar_menu_live' => 'Live Parent Menu', 'sidebar_live_list' => 'Live List'],
+            'Sidebar Moderation' => ['sidebar_menu_ban' => 'Ban ID Parent Menu', 'sidebar_ban_id' => 'Ban', 'sidebar_invisible_id' => 'Invisible ID Menu', 'sidebar_official_id' => 'Official ID Menu', 'sidebar_withdraw' => 'Withdraw Section', 'sidebar_menu_live' => 'Live Parent Menu', 'sidebar_live_list' => 'Live List'],
             'Sidebar Game Control' => ['sidebar_menu_game_control' => 'Game Control Parent Menu', 'sidebar_game_fruits_detail' => 'Fruits Game', 'sidebar_game_fruits_lock' => 'Fruits Lock', 'sidebar_game_teenpatti_detail' => 'Teenpati Game', 'sidebar_game_greedy_detail' => 'Greedy Game', 'sidebar_game_fruits_pattern' => 'Fruits Pattan'],
             'Sidebar Setting' => ['sidebar_menu_setting' => 'Setting Parent Menu', 'sidebar_setting_banner' => 'Banner', 'sidebar_setting_country' => 'Country', 'sidebar_setting_gift_data' => 'Gift Data', 'sidebar_setting_agora' => 'Agora Setting', 'sidebar_setting_email_change' => 'Email Change', 'sidebar_setting_admin' => 'Admin', 'sidebar_setting_audio_background' => 'Audio Brd Background', 'sidebar_setting_store' => 'Store', 'sidebar_setting_fanclub' => 'Fan Club / Guardian', 'sidebar_setting_combo' => 'Gift Combo', 'sidebar_setting_checkin' => 'Daily Check-in', 'sidebar_setting_level' => 'Level Setting', 'sidebar_setting_fun_sticker' => 'Fun Sticker', 'sidebar_setting_system' => 'System Setting'],
             'Dashboard' => ['dashboard_access' => 'Open Dashboard', 'dashboard_vip_offer' => 'VIP Offer Button', 'dashboard_version_update' => 'Android Version Update Button', 'dashboard_profit_loss' => 'Profit / Loss Card', 'dashboard_total_serve_coin' => 'Total Serve Coin Card', 'dashboard_coin_generate_game' => 'Coin Generate Card', 'dashboard_game_data' => 'Game Data Cards', 'dashboard_realtime_feeds' => 'Comment / Chat Feed', 'dashboard_game_pro_balance' => 'Game Pro Balance Card', 'dashboard_game_pro_balance_manage' => 'Game Pro Deposit / Withdraw', 'dashboard_total_users' => 'Total Users Card', 'dashboard_user_wallets' => 'User Wallets Card', 'dashboard_game_profit' => 'Game Profit Card', 'dashboard_today_recharge' => 'Today Recharge Card', 'dashboard_today_sending' => 'Today Sending Card', 'dashboard_today_receiving' => 'Today Receiving Card', 'dashboard_today_gift' => 'Today Gift Sum Card', 'dashboard_withdraw_commission' => 'Withdraw Commission Card', 'dashboard_users_agents' => 'Users & Agents Card', 'dashboard_coin_metrics' => 'Coin Metrics Card', 'dashboard_today_transactions' => 'Today Transactions Card', 'dashboard_withdraw_profit' => 'Withdraw Profit Card', 'dashboard_portal_balance' => 'Portal Balance Card', 'dashboard_portal_send' => 'Portal Send Card', 'dashboard_total_receiving' => 'Total Receiving Card'],
-            'Profile' => ['profile_search' => 'Profile Search', 'profile_balance' => 'Profile Balance', 'profile_email_info' => 'Profile Email', 'profile_phone_info' => 'Profile Phone', 'profile_nid' => 'Profile NID + Documents', 'profile_vip_info' => 'Profile VIP Info', 'profile_entry_frame' => 'Profile Entry Frame', 'profile_other_ids' => 'Other IDs From Same IMEI', 'profile_power_buttons' => 'Power Buttons', 'profile_vip_frames_edit' => 'VIP / Entry / Special Frame / Profile Edit', 'profile_password_daytime' => 'Change Password / Add Day Time'],
+            'Profile' => ['profile_search' => 'Profile Search', 'profile_balance' => 'Profile Balance', 'profile_email_info' => 'Profile Email', 'profile_phone_info' => 'Profile Phone', 'profile_nid' => 'Profile NID + Documents', 'profile_vip_info' => 'Profile VIP Info', 'profile_entry_frame' => 'Profile Entry Frame', 'profile_other_ids' => 'Other IDs From Same IMEI', 'profile_power_buttons' => 'Power Buttons', 'profile_vip_frames_edit' => 'VIP / Entry / Special Frame / Profile Edit', 'profile_password_daytime' => 'Change Password / Add Day Time', 'profile_sensitive_info' => 'Sensitive/PII Info Badge'],
             'Profile Fields' => ['profile_f_level' => 'Field: Level', 'profile_f_entry' => 'Field: Entry', 'profile_f_join_date' => 'Field: Join Date', 'profile_f_country' => 'Field: Country', 'profile_f_join_agency_name' => 'Field: Agency Name', 'profile_f_code' => 'Field: Code', 'profile_f_agency_phone' => 'Field: Agency Phone', 'profile_f_recharge' => 'Field: Recharge', 'profile_f_transfer' => 'Field: Transfer', 'profile_f_recall' => 'Field: Recall', 'profile_f_portal_transfer_send' => 'Field: Portal Transfer Send', 'profile_f_portal_transfer_received' => 'Field: Portal Transfer Received', 'profile_f_name' => 'Field: Name', 'profile_f_withdraw_commission' => 'Field: Withdraw Commission', 'profile_f_convert' => 'Field: Convert', 'profile_f_available' => 'Field: Available', 'profile_f_hosting_type' => 'Field: Hosting Type', 'profile_f_day' => 'Field: Day', 'profile_f_time' => 'Field: Time', 'profile_f_point_collect' => 'Field: Point Collect', 'profile_f_total_withdraw' => 'Field: Total Withdraw', 'profile_f_previous_points' => 'Field: Previous Points', 'profile_f_now_points_have' => 'Field: Now Points Have', 'profile_f_vip_activation' => 'Field: VIP Activation', 'profile_f_special_frame' => 'Field: Special Frame'],
+            'Profile Tables' => [
+                'profile_table_portal_history'   => 'Table: Portal Recharge/Transfer History',
+                'profile_table_host_data'        => 'Table: Host Data',
+                'profile_table_game_history'     => 'Table: Game History',
+                'profile_table_daytime_history'  => 'Table: Day Time History',
+                'profile_table_portal_transfer'  => 'Table: Portal Transfer Sent/Received',
+                'profile_table_convert_history'  => 'Table: Convert History',
+                'profile_table_recharge_history' => 'Table: Recharge History',
+                'profile_table_gift_history'     => 'Table: Gift Sending/Receiving History',
+            ],
             'Profile Buttons' => ['profile_btn_user_role' => 'Button: Change Admin Role', 'profile_btn_top_position' => 'Button: Top Position On/Off', 'profile_btn_active_host' => 'Button: Activate Host', 'profile_btn_reject_host' => 'Button: Reject Host', 'profile_btn_active_protal' => 'Button: Activate Protal', 'profile_btn_reject_protal' => 'Button: Reject Protal', 'profile_btn_active_official' => 'Button: Activate Official ID', 'profile_btn_reject_official' => 'Button: Reject Official ID', 'profile_btn_gift_recall' => 'Button: Gift Recall', 'profile_btn_withdraw_active' => 'Button: Withdraw Active'],
             'Admin Setting' => ['setting_admin_manage' => 'Manage Admin Permissions'],
         ];
@@ -57,7 +67,33 @@ class AdminSettingController extends Controller
 
     private static function subadminPreset()
     {
-        return ['sidebar_access', 'sidebar_menu_dashboard', 'sidebar_menu_host', 'sidebar_host_add', 'sidebar_host_active', 'sidebar_host_pending', 'sidebar_host_transfer', 'sidebar_menu_agency', 'sidebar_agency_create', 'sidebar_agency_list', 'sidebar_menu_protal', 'sidebar_protal_create', 'sidebar_protal_list', 'sidebar_protal_recall_create', 'sidebar_protal_recall_history', 'sidebar_protal_recharge', 'sidebar_protal_recharge_list', 'sidebar_protal_new_recall', 'sidebar_protal_recall_list', 'sidebar_menu_support', 'sidebar_support_index', 'sidebar_menu_ranking', 'sidebar_ranking_list', 'sidebar_menu_ban', 'sidebar_ban_id', 'sidebar_menu_live', 'sidebar_live_list', 'sidebar_menu_setting', 'sidebar_setting_banner', 'sidebar_setting_store', 'dashboard_access', 'dashboard_game_pro_balance', 'profile_search', 'profile_balance', 'profile_power_buttons', 'profile_vip_frames_edit'];
+        return ['sidebar_access', 'sidebar_menu_dashboard', 'sidebar_menu_host', 'sidebar_host_add', 'sidebar_host_active', 'sidebar_host_pending', 'sidebar_host_transfer', 'sidebar_menu_agency', 'sidebar_agency_create', 'sidebar_agency_list', 'sidebar_menu_protal', 'sidebar_protal_create', 'sidebar_protal_list', 'sidebar_protal_recall_create', 'sidebar_protal_recall_history', 'sidebar_protal_recharge', 'sidebar_protal_recharge_list', 'sidebar_protal_new_recall', 'sidebar_protal_recall_list', 'sidebar_menu_support', 'sidebar_support_index', 'sidebar_menu_ranking', 'sidebar_ranking_list', 'sidebar_menu_ban', 'sidebar_ban_id', 'sidebar_invisible_id', 'sidebar_official_id', 'sidebar_menu_live', 'sidebar_live_list', 'sidebar_menu_setting', 'sidebar_setting_banner', 'sidebar_setting_store', 'dashboard_access', 'dashboard_game_pro_balance', 'profile_search', 'profile_balance', 'profile_power_buttons', 'profile_vip_frames_edit', 'profile_table_portal_history', 'profile_table_host_data', 'profile_table_game_history', 'profile_table_daytime_history', 'profile_table_portal_transfer', 'profile_table_convert_history', 'profile_table_recharge_history', 'profile_table_gift_history'];
+    }
+
+    private static function countryAdminPreset(): array
+    {
+        return [
+            'sidebar_access', 'sidebar_menu_dashboard',
+            'sidebar_menu_host', 'sidebar_host_add', 'sidebar_host_active', 'sidebar_host_pending', 'sidebar_host_transfer',
+            'sidebar_menu_agency', 'sidebar_agency_list',
+            'sidebar_menu_protal', 'sidebar_protal_create', 'sidebar_protal_list',
+            'sidebar_protal_recharge', 'sidebar_protal_recharge_list',
+            'sidebar_protal_new_recall', 'sidebar_protal_recall_list',
+            'sidebar_menu_support', 'sidebar_support_index',
+            'sidebar_menu_ranking', 'sidebar_ranking_list',
+            'sidebar_menu_user_balance', 'sidebar_user_balance_wallet',
+            'sidebar_menu_ban', 'sidebar_ban_id', 'sidebar_invisible_id', 'sidebar_official_id',
+            'sidebar_menu_live', 'sidebar_live_list',
+            'dashboard_access',
+            'profile_search', 'profile_balance', 'profile_email_info', 'profile_phone_info',
+            'profile_f_level', 'profile_f_join_date', 'profile_f_country',
+            'profile_f_hosting_type', 'profile_f_day', 'profile_f_time',
+            'profile_power_buttons', 'profile_vip_frames_edit',
+            'profile_table_host_data', 'profile_table_daytime_history',
+            'profile_btn_active_host', 'profile_btn_reject_host',
+            'profile_btn_active_official', 'profile_btn_reject_official',
+            'profile_sensitive_info',
+        ];
     }
 
     private static function countries()
@@ -103,6 +139,7 @@ class AdminSettingController extends Controller
             'permissionGroups' => self::groups(),
             'adminPreset' => self::adminPreset(),
             'subadminPreset' => self::subadminPreset(),
+            'countryAdminPreset' => self::countryAdminPreset(),
             'countries' => self::countries(),
             'q' => $q,
         ]);
@@ -128,6 +165,9 @@ class AdminSettingController extends Controller
         }
 
         $mode = $request->admin_mode;
+        if ((int) $user->id === 1111120) {
+            return back()->with(['messege' => 'Cannot modify superuser account.', 'alert-type' => 'error']);
+        }
         if ((int) $user->id === (int) Auth::id() && $mode === 'normal') {
             return back()->withInput()->with(['messege' => 'You cannot remove your own admin access.', 'alert-type' => 'error']);
         }
@@ -138,6 +178,9 @@ class AdminSettingController extends Controller
         }
 
         $perms = array_values(array_intersect((array) $request->input('permissions', []), self::keys()));
+        if ($mode === 'country' && empty($perms)) {
+            $perms = self::countryAdminPreset();
+        }
 
         DB::transaction(function () use ($request, $user, $mode, $perms, $countryId) {
             if ($request->filled('password')) {
@@ -228,7 +271,7 @@ class AdminSettingController extends Controller
             // Preserve the admin's existing custom selection; only refresh mode.
             $perms = array_values(array_intersect((array) $existing->permissions, self::keys()));
         } else {
-            $perms = $mode === 'admin' ? self::adminPreset() : self::subadminPreset();
+            $perms = $mode === 'admin' ? self::adminPreset() : ($mode === 'country' ? self::countryAdminPreset() : self::subadminPreset());
         }
 
         AdminParmisiton::query()->updateOrInsert(
@@ -312,7 +355,7 @@ class AdminSettingController extends Controller
                     ['user_id' => $user->id],
                     [
                         'admin_mode' => 'country',
-                        'permissions' => json_encode(self::subadminPreset()),
+                        'permissions' => json_encode(self::countryAdminPreset()),
                         'updated_by' => Auth::id(),
                         'updated_at' => now(),
                         'created_at' => now(),

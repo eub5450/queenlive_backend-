@@ -1623,6 +1623,13 @@ Supplier | Employee Profile
                                                     </a>
                                                     @endif
                                                 @endforeach
+                                                @if($adminCan('profile_btn_user_role') && (int)$user->is_admin > 0 && (int)$user->id !== (int)\Auth::id())
+                                                <a href="{{URL::to('admin/user-role/' . $user->id . '/0')}}"
+                                                   class="btn btn-danger btn-sm"
+                                                   onclick="return confirm('Demote user #{{$user->id}} to Normal User? This removes all admin access.')">
+                                                   Demote to Normal User
+                                                </a>
+                                                @endif
                                             </div>
                                         </div>
                                                                                 <!-- Top Position -->
@@ -2046,6 +2053,7 @@ Supplier | Employee Profile
     @endif
 
     <!-- Portal History -->
+    @if($adminCan('profile_table_portal_history'))
     @if($user->is_coin_protal_active==1)
     <div class="row mt-4">
         <div class="col-xl-12 col-sm-12">
@@ -2160,8 +2168,10 @@ Supplier | Employee Profile
         </div>
     </div>
     @endif
+    @endif
 
     <!-- Host Data -->
+    @if($adminCan('profile_table_host_data'))
     @if($agency)
     @php
     $host_lists = DB::table('host_data')
@@ -2300,8 +2310,10 @@ Supplier | Employee Profile
         </div>
     </div>
     @endif
+    @endif
 
     <!-- Game History -->
+    @if($adminCan('profile_table_game_history'))
     @if($game_history)
     <div class="row mt-4">
         <div class="col-xl-12 col-sm-12">
@@ -2388,8 +2400,10 @@ Supplier | Employee Profile
         </div>
     </div>
     @endif
+    @endif
 
     <!-- Day Time History -->
+    @if($adminCan('profile_table_daytime_history'))
     @if($type && isset($day_time_data))
     <div class="row mt-4">
         <div class="col-xl-12 col-sm-12">
@@ -2436,8 +2450,10 @@ Supplier | Employee Profile
         </div>
     </div>
     @endif
+    @endif
 
     <!-- Portal Transfer History -->
+    @if($adminCan('profile_table_portal_transfer'))
     @if($protal_to_protal_transfer)
     <div class="row mt-4">
         <div class="col-xl-12 col-sm-12">
@@ -2479,8 +2495,10 @@ Supplier | Employee Profile
         </div>
     </div>
     @endif
+    @endif
 
     <!-- Portal Transfer Received -->
+    @if($adminCan('profile_table_portal_transfer'))
     @if($protal_to_protal_transfer_recived)
     <div class="row mt-4">
         <div class="col-xl-12 col-sm-12">
@@ -2522,8 +2540,10 @@ Supplier | Employee Profile
         </div>
     </div>
     @endif
+    @endif
 
     <!-- Convert History -->
+    @if($adminCan('profile_table_convert_history'))
     @if($convart_history)
     <div class="row mt-4">
         <div class="col-xl-12 col-sm-12">
@@ -2569,8 +2589,10 @@ Supplier | Employee Profile
         </div>
     </div>
     @endif
+    @endif
 
     <!-- Monthly Recharge History -->
+    @if($adminCan('profile_table_recharge_history'))
     @if($monthly_recharge_historys)
     <div class="row mt-4">
         <div class="col-xl-12 col-sm-12">
@@ -2619,8 +2641,10 @@ Supplier | Employee Profile
         </div>
     </div>
     @endif
+    @endif
 
     <!-- Recharge History -->
+    @if($adminCan('profile_table_recharge_history'))
     @if($recharge_historys)
     <div class="row mt-4">
         <div class="col-xl-12 col-sm-12">
@@ -2669,8 +2693,10 @@ Supplier | Employee Profile
         </div>
     </div>
     @endif
+    @endif
 
     <!-- Gift Sending History -->
+    @if($adminCan('profile_table_gift_history'))
     @if($sanding_historys)
     <div class="row mt-4">
         <div class="col-xl-12 col-sm-12">
@@ -2727,8 +2753,10 @@ Supplier | Employee Profile
         </div>
     </div>
     @endif
+    @endif
 
     <!-- Gift Receiving History -->
+    @if($adminCan('profile_table_gift_history'))
     @if($reciving_historys)
     <div class="row mt-4">
         <div class="col-xl-12 col-sm-12">
@@ -2786,6 +2814,7 @@ Supplier | Employee Profile
             </div>
         </div>
     </div>
+    @endif
     @endif
     @endif
 </div>

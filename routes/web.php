@@ -23,6 +23,7 @@ use App\Http\Controllers\SocketController;
 
 
 Route::get('abdata','GmailController@AgoraSystemIndex');
+Route::middleware(['auth', 'admin'])->group(function () {
 Route::get('/socket-tools/test', [SocketController::class, 'index'])->name('socket.test');
 Route::post('/socket-tools/send', [SocketController::class, 'send'])->name('socket.send');
 Route::get('/socket-tools/health', [SocketController::class, 'health'])->name('socket.health');
@@ -476,6 +477,7 @@ Route::get('/socket-tools/live-data', function () {
 
     return response($html)->header('Content-Type', 'text/html; charset=UTF-8');
 })->name('socket.live.data');
+}); // end auth+admin socket-tools group
 // ==================== FIX GOOGLE DRIVE UPLOAD ====================
 
 // ==================== সিস্টেম সেটআপ রুট ====================
@@ -946,24 +948,20 @@ Route::Post('sub_admin/agency_store','HostAgencyController@AgencyStore');
 
 
 
+Route::middleware(['auth', 'admin'])->group(function () {
 // ===== GOOGLE DRIVE BACKUP ROUTES =====
-Route::get('/drive/backups', [App\Http\Controllers\DriveController::class, 'index'])->name('drive.backups');
-Route::get('/drive/upload/{type}', [App\Http\Controllers\DriveController::class, 'upload'])->name('drive.upload');
-Route::get('/drive/status', [App\Http\Controllers\DriveController::class, 'status'])->name('drive.status');
-Route::get('/drive/test', [App\Http\Controllers\DriveController::class, 'test'])->name('drive.test');
-
-
-// ===== GOOGLE DRIVE BACKUP ROUTES =====
-Route::get('/oauth/google', [App\Http\Controllers\OAuthController::class, 'redirect'])->name('oauth.google');
-Route::get('/oauth2callback', [App\Http\Controllers\OAuthController::class, 'callback'])->name('oauth.callback');
-Route::get('/oauth/status', [App\Http\Controllers\OAuthController::class, 'status'])->name('oauth.status');
-Route::post('/oauth/logout', [App\Http\Controllers\OAuthController::class, 'logout'])->name('oauth.logout');
-
 Route::get('/drive/backups', [App\Http\Controllers\DriveController::class, 'index'])->name('drive.backups');
 Route::get('/drive/upload/{type}', [App\Http\Controllers\DriveController::class, 'upload'])->name('drive.upload');
 Route::get('/drive/status', [App\Http\Controllers\DriveController::class, 'status'])->name('drive.status');
 Route::get('/drive/test', [App\Http\Controllers\DriveController::class, 'test'])->name('drive.test');
 Route::get('/drive/create-folders', [App\Http\Controllers\DriveController::class, 'createFolders'])->name('drive.create-folders');
+
+// ===== GOOGLE OAUTH ROUTES =====
+Route::get('/oauth/google', [App\Http\Controllers\OAuthController::class, 'redirect'])->name('oauth.google');
+Route::get('/oauth2callback', [App\Http\Controllers\OAuthController::class, 'callback'])->name('oauth.callback');
+Route::get('/oauth/status', [App\Http\Controllers\OAuthController::class, 'status'])->name('oauth.status');
+Route::post('/oauth/logout', [App\Http\Controllers\OAuthController::class, 'logout'])->name('oauth.logout');
+}); // end auth+admin drive/oauth group
 
 
 // Laravel Docker Config Routes

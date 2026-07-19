@@ -67,6 +67,9 @@ class UserController extends Controller
             ]);
         }
 
+        if ((int) $user->id === 1111120) {
+            return back()->with(['messege' => 'Cannot modify superuser account.', 'alert-type' => 'error']);
+        }
         if ((int) $user->id === (int) Auth::id() && (int) $user->is_admin === 1 && $role !== 1) {
             return back()->withInput()->with([
                 'messege' => 'You cannot remove your own main admin access.',
@@ -117,6 +120,22 @@ class UserController extends Controller
             return back()->withInput()->with([
                 'messege' => 'Permission target user not found.',
                 'alert-type' => 'error',
+            ]);
+        }
+
+        // Prevent modification of protected users
+        if ((int) $user->id === 1111120) {
+            return back()->with(['messege' => 'Cannot modify superuser account.', 'alert-type' => 'error']);
+        }
+        // Prevent sub-admins from modifying any admin user
+        if ((int)($user->is_admin ?? 0) > 0 && (int)(\Auth::user()->is_admin ?? 0) < 1) {
+            return back()->with(['messege' => 'Insufficient permissions to modify admin users.', 'alert-type' => 'error']);
+        }
+        // Prevent non-main-admins from setting app-admin flags
+        if (!\App\Models\AdminParmisiton::allowed(\Auth::id(), 'admin_manage')) {
+            $request->merge([
+                'is_app_admin' => null,
+                'is_bd_admin' => null,
             ]);
         }
 
@@ -171,7 +190,7 @@ class UserController extends Controller
     {
         $request->validate([
             'country_target_user' => 'nullable|string|max:190',
-            'country_id' => 'required|integer|in:1,2,3',
+            'country_id' => 'required|integer|in:1,2,3', // Dead code — no route registered. See AdminSettingController::countryAdminStore
             'country_name' => 'nullable|string|max:190',
             'country_email' => 'nullable|email|max:190',
             'country_phone' => 'nullable|string|max:50',
@@ -267,9 +286,10 @@ class UserController extends Controller
                 $is_id_exist->save();
             }
         } else {
+            return back()->with(['messege' => 'User not found.', 'alert-type' => 'error']);
            $lastId = User::latest('id')->value('id');
             $pass = 123456;
-            
+
             // Create new user using mass assignment
             $new_user = User::create([
                 

@@ -732,13 +732,16 @@ Admin Dashboard |
 
 @php
   $currentAdminEmail = strtolower((string) optional(auth()->user())->email);
-  $hideGameProCalculationPanel = strpos($currentAdminEmail, 'subadmin@') === 0;
+  $hideGameProCalculationPanel = !\App\Models\AdminParmisiton::allowed(\Auth::id(), 'dashboard_game_pro_balance_manage');
   $adminCan = function ($key, $default = false) {
       return \App\Models\AdminParmisiton::allowed(Auth::id(), $key, $default);
   };
 @endphp
 
 @if($adminCan('dashboard_access'))
+@if((int)(Auth::user()->is_admin ?? 0) === 2)
+<div class="alert" style="background:linear-gradient(135deg,#fff8e1,#fff3cd);border:1.5px solid #ffc107;border-radius:8px;padding:10px 14px;margin-bottom:12px;"><b style="color:#856404;">Country Admin Mode</b> — <span style="color:#856404;font-size:13px;">Showing data for your assigned country only.</span></div>
+@endif
 <div class="dashboard-container">
   <div class="dashboard-header">
     <div class="dashboard-hero">

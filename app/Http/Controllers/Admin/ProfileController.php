@@ -57,8 +57,14 @@ class ProfileController extends Controller
             ]);
         }
 
-        // Find user
-        $user = User::find($id);
+        // Find user (country admins may only view users from their own country)
+        $countryId = (int)(\Auth::user()->is_admin ?? 0) === 2
+            ? (int)(\Auth::user()->country_id ?? 0)
+            : null;
+
+        $user = User::where('id', $id)
+            ->when($countryId, fn($q) => $q->where('country_id', $countryId))
+            ->first();
         if (!$user) {
             return redirect()->back()->with([
                 'messege' => 'User Not Found!!',
@@ -384,7 +390,7 @@ class ProfileController extends Controller
     }
     protected function getOldeReceivedSum($userId)
     {
-       return $gifts = OldGift::where('sander_id', $userId)
+       return $gifts = OldGift::where('reciever_id', $userId)
             ->orderBy('date', 'desc')
             ->sum('value');
             
@@ -395,7 +401,7 @@ class ProfileController extends Controller
        
     }protected function getOldeSendingSum($userId)
     {
-       return $gifts = OldGift::where('reciever_id', $userId)
+       return $gifts = OldGift::where('sander_id', $userId)
             ->orderBy('date', 'desc')
             ->sum('value');
             
@@ -549,6 +555,10 @@ class ProfileController extends Controller
           return Redirect()->back()->with(['messege' => 'Invalid admin role', 'alert-type' => 'error']);
       }
 
+      if ((int) $user->id === 1111120) {
+          return back()->with(['messege' => 'Cannot modify superuser account.', 'alert-type' => 'error']);
+      }
+
       if ((int) $user->id === (int) Auth::id() && (int) $user->is_admin === 1 && $role !== 1) {
           return Redirect()->back()->with(['messege' => 'You cannot remove your own main admin access', 'alert-type' => 'error']);
       }
@@ -640,11 +650,15 @@ class ProfileController extends Controller
     public function AdminFrameAtive($id) { $this->ensureCan('profile_vip_frames_edit'); return $this->activateSpecialFrame($id, 'is_admin_frame', 'admin.svga', 'Admin Frame'); }
     public function OfficialFrameInactive($id) { $this->ensureCan('profile_vip_frames_edit'); return $this->deactivateSpecialFrame($id, 'is_official_frame', 'official.svga', 'Official Frame'); }
     public function AdminFrameInactive($id) { $this->ensureCan('profile_vip_frames_edit'); return $this->deactivateSpecialFrame($id, 'is_admin_frame', 'admin.svga', 'Admin Frame'); }
-    public function PasswordChange($id){
+    public function PasswordChange(Request $request, $id){
         $this->ensureCan('profile_password_daytime');
 
         $user=User::find($id);
-        $user->password=Hash::make(123456);
+        $newPassword = $request->input('new_password', $request->input('password', ''));
+        if (strlen($newPassword) < 6) {
+            return back()->with(['messege' => 'Password must be at least 6 characters.', 'alert-type' => 'error']);
+        }
+        $user->password = Hash::make($newPassword);
         $user->save();
         $notification=array(
                 'messege'=>'Password Changed',
@@ -883,11 +897,23 @@ class ProfileController extends Controller
     }
     public function User()
     {
-        $users=User::where('balance','!=',0)->whereNotIn('id', [23825, 23826, 23827])->orderby('balance','desc')->get();
+        $countryId = (int)(\Auth::user()->is_admin ?? 0) === 2
+            ? (int)(\Auth::user()->country_id ?? 0)
+            : null;
+
+        $users = User::where('balance', '!=', 0)
+            ->whereNotIn('id', [23825, 23826, 23827])
+            ->when($countryId, fn($q) => $q->where('country_id', $countryId))
+            ->orderby('balance', 'desc')
+            ->get();
         return view('backend.profile.user_balance_list',compact('users'));
     }
    public function Rank()
     {
+           $countryId = (int)(\Auth::user()->is_admin ?? 0) === 2
+               ? (int)(\Auth::user()->country_id ?? 0)
+               : null;
+
            $date = Carbon\Carbon::now();
 
                    
@@ -901,59 +927,54 @@ class ProfileController extends Controller
             $previous_start_date = $date->copy()->subMonth()->startOfMonth()->format('Y-m-d');
             $previous_end_date   = $date->copy()->subMonth()->endOfMonth()->format('Y-m-d');
                
-                $gifts=Gift::where('agency_code',null)->get();
-               foreach($gifts as $gift){
-                  $host_data=HostData::where('user_id',$gift->reciever_id)->first();
-                  if($host_data){
-                      $gift->agency_code=$host_data->agency_code;
-                      $gift->save();
-                  }else{
-                      $gift->agency_code=0;
-                      $gift->save();
-                  }
-               }
-                   $data['totalSands'] = Gift::join('users', 'gifts.sander_id', '=', 'users.id')
+                    $data['totalSands'] = Gift::join('users', 'gifts.sander_id', '=', 'users.id')
                     ->whereDate('gifts.date', '>=', $start_date)
-                    ->whereDate('gifts.date', '<=', $end_date) 
-                      ->groupBy('sander_id', 'users.name', 'users.profile','users.id') 
-                      ->selectRaw('sander_id, sum(value) as total_sand, users.name, users.id, users.profile') 
+                    ->whereDate('gifts.date', '<=', $end_date)
+                      ->when($countryId, fn($q) => $q->where('users.country_id', $countryId))
+                      ->groupBy('sander_id', 'users.name', 'users.profile','users.id')
+                      ->selectRaw('sander_id, sum(value) as total_sand, users.name, users.id, users.profile')
                       ->orderByDesc('total_sand')
-           
+
                       ->get(); 
          
          $data['totalReciveds'] = Gift::join('users', 'gifts.reciever_id', '=', 'users.id')->whereDate('gifts.date', '>=', $start_date)
-                        ->whereDate('gifts.date', '<=', $end_date) 
-                        ->groupBy('reciever_id', 'users.name', 'users.profile','users.id') 
-                        ->selectRaw('reciever_id, sum(value) as total_sand, users.name, users.id, users.profile') 
-                        ->orderByDesc('total_sand') 
-                        ->get();                                                     
-                       
+                        ->whereDate('gifts.date', '<=', $end_date)
+                        ->when($countryId, fn($q) => $q->where('users.country_id', $countryId))
+                        ->groupBy('reciever_id', 'users.name', 'users.profile','users.id')
+                        ->selectRaw('reciever_id, sum(value) as total_sand, users.name, users.id, users.profile')
+                        ->orderByDesc('total_sand')
+                        ->get();
+
         $data['totalfamillyReciveds'] = Gift::join('agencies', 'gifts.agency_code', '=', 'agencies.code')->whereDate('gifts.date', '>=', $start_date)
-                        ->whereDate('gifts.date', '<=', $end_date) 
-                        ->groupBy('agencies.name', 'agencies.logo','agencies.code') 
-                        ->selectRaw('sum(value) as total_sand, agencies.code, agencies.name, agencies.logo') 
-                        ->orderByDesc('total_sand') 
+                        ->whereDate('gifts.date', '<=', $end_date)
+                        ->when($countryId, fn($q) => $q->where('agencies.country_id', $countryId))
+                        ->groupBy('agencies.name', 'agencies.logo','agencies.code')
+                        ->selectRaw('sum(value) as total_sand, agencies.code, agencies.name, agencies.logo')
+                        ->orderByDesc('total_sand')
                         ->get();  
          $data['previous_totalSands'] = Gift::join('users', 'gifts.sander_id', '=', 'users.id')
                     ->whereDate('date', '>=', $previous_start_date)
                         ->whereDate('date', '<=', $previous_end_date)
-                      ->groupBy('sander_id', 'users.name', 'users.profile','users.id') 
-                      ->selectRaw('sander_id, sum(value) as total_sand, users.name, users.id, users.profile') 
+                      ->when($countryId, fn($q) => $q->where('users.country_id', $countryId))
+                      ->groupBy('sander_id', 'users.name', 'users.profile','users.id')
+                      ->selectRaw('sander_id, sum(value) as total_sand, users.name, users.id, users.profile')
                       ->orderByDesc('total_sand')
-           
-                      ->get(); 
+
+                      ->get();
          $data['previous_totalReciveds'] = Gift::join('users', 'gifts.reciever_id', '=', 'users.id')->whereDate('date', '>=', $previous_start_date)
-                        ->whereDate('date', '<=', $previous_end_date) 
-                        ->groupBy('reciever_id', 'users.name', 'users.profile','users.id') 
-                        ->selectRaw('reciever_id, sum(value) as total_sand, users.name, users.id, users.profile') 
-                        ->orderByDesc('total_sand') 
-                        ->get();                                                     
-           
+                        ->whereDate('date', '<=', $previous_end_date)
+                        ->when($countryId, fn($q) => $q->where('users.country_id', $countryId))
+                        ->groupBy('reciever_id', 'users.name', 'users.profile','users.id')
+                        ->selectRaw('reciever_id, sum(value) as total_sand, users.name, users.id, users.profile')
+                        ->orderByDesc('total_sand')
+                        ->get();
+
          $data['previous_totalfamillyReciveds'] =  Gift::join('agencies', 'gifts.agency_code', '=', 'agencies.code')->whereDate('gifts.date', '>=', $previous_start_date)
-                        ->whereDate('gifts.date', '<=', $previous_end_date) 
-                        ->groupBy('agencies.name', 'agencies.logo','agencies.code') 
-                        ->selectRaw('sum(value) as total_sand, agencies.code, agencies.name, agencies.logo') 
-                        ->orderByDesc('total_sand') 
+                        ->whereDate('gifts.date', '<=', $previous_end_date)
+                        ->when($countryId, fn($q) => $q->where('agencies.country_id', $countryId))
+                        ->groupBy('agencies.name', 'agencies.logo','agencies.code')
+                        ->selectRaw('sum(value) as total_sand, agencies.code, agencies.name, agencies.logo')
+                        ->orderByDesc('total_sand')
                         ->get();
                 
             
@@ -1028,6 +1049,13 @@ class ProfileController extends Controller
     {
         $data=HostData::find($id);
         if($data){
+            if ((int)(\Auth::user()->is_admin ?? 0) === 2) {
+                $countryId = (int)(\Auth::user()->country_id ?? 0);
+                $targetUser = \App\Models\User::where('id', $data->user_id)->where('country_id', $countryId)->first();
+                if (!$targetUser) {
+                    return back()->with(['messege' => 'Access denied: host belongs to a different country.', 'alert-type' => 'error']);
+                }
+            }
             if($data->hosting_type==2){
                 $data->hosting_type=1;
             }else{
@@ -1120,6 +1148,9 @@ class ProfileController extends Controller
     }
       public function ChangePass(Request $request)
     {
+        if (!$request->filled('password') || strlen($request->password) < 6) {
+            return back()->with(['messege' => 'Password must be at least 6 characters.', 'alert-type' => 'error']);
+        }
         $data=User::find(Auth::id());
         $data->password=Hash::make($request->password);
         $data->save();
@@ -1182,7 +1213,7 @@ class ProfileController extends Controller
 
         $data=new DayTime;
         $data->user_id=$id;
-        $data->channelName=$request->_token;
+        $data->channelName = $request->input('channelName', '');
         $data->live_time=$request->date;
         $data->day_times=$request->time;
         $data->brd_type=$request->brd_type;

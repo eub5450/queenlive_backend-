@@ -48,11 +48,16 @@ class Withdraw extends Model
         static::created(function ($withdraw) {
             CacheClearHelperFromModelAuto::clearWithdrawCaches($withdraw, 'created');
         });
-        
+
         static::updated(function ($withdraw) {
             CacheClearHelperFromModelAuto::clearWithdrawCaches($withdraw, 'updated');
         });
     }
-    
-    
+
+    public function host()
+    {
+        return $this->belongsTo(User::class, 'host_id');
+    }
+
+
 }

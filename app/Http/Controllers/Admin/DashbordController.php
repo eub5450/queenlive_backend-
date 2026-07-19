@@ -45,10 +45,17 @@ class DashbordController extends Controller
     {
         $this->database = $database;
     }
+
+    private function countryScope(): ?int
+    {
+        $user = \Auth::user();
+        return (int)($user->is_admin ?? 0) === 2 ? (int)($user->country_id ?? 0) : null;
+    }
+
     function restartVultrServer()
     {
-        $apiKey = '6R2EUIZTIAIB3UN4VMBSJ74UCF5226BVCFIA';
-        $instanceId = '12a0e3a6-a7e1-4f3d-9a86-95f34e076792';
+        $apiKey = env('VULTR_API_KEY');
+        $instanceId = env('VULTR_INSTANCE_ID');
     
         $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . $apiKey,
@@ -65,7 +72,8 @@ class DashbordController extends Controller
 
  public function index()
     {
-        $data = $this->getDashboardData();
+        $countryId = $this->countryScope();
+        $data = $this->getDashboardData($countryId);
        
         
         // Get initial chat data (only 20 items)
@@ -217,10 +225,11 @@ class DashbordController extends Controller
     /**
      * Get Dashboard Statistics Data (Cached)
      */
-    private function getDashboardData()
+    private function getDashboardData(?int $countryId = null)
     {
         $today = now()->toDateString();
-        $cached = Cache::remember('admin.dashboard.metrics.v2', now()->addSeconds(30), function () use ($today) {
+        $cacheKey = 'admin.dashboard.metrics.v2' . ($countryId ? '.c' . $countryId : '');
+        $cached = Cache::remember($cacheKey, now()->addSeconds(30), function () use ($today, $countryId) {
             $gift = Gift::sum('value');
             $oldGift = OldGift::sum('value');
             $todayGift = Gift::whereDate('date', $today)->sum('value');
@@ -230,8 +239,8 @@ class DashbordController extends Controller
             return [
                 'total_coin_beg' => CoinBeg::sum('amount'),
                 'today_coin_beg' => CoinBeg::whereDate('created_at', $today)->sum('amount'),
-                'users_balance' => User::sum('balance'),
-                'today_user' => User::whereDate('created_at', $today)->count(),
+                'users_balance' => User::when($countryId, fn($q) => $q->where('country_id', $countryId))->sum('balance'),
+                'today_user' => User::whereDate('created_at', $today)->when($countryId, fn($q) => $q->where('country_id', $countryId))->count(),
                 'total_gift' => $oldGift + $gift,
                 'today_sanding' => Gift::whereNotNull('sander_id')->whereDate('date', $today)->sum('value')
                     + OldGift::whereNotNull('sander_id')->whereDate('date', $today)->sum('value'),
@@ -246,8 +255,8 @@ class DashbordController extends Controller
                 'today_withdraw' => Withdraw::whereDate('created_at', $today)->sum('total'),
                 'total_portal_recall' => PortalRecall::sum('amount'),
                 'total_agency' => Agency::count(),
-                'active_host' => User::where('is_host_id', 1)->count(),
-                'total_users' => User::count(),
+                'active_host' => User::where('is_host_id', 1)->when($countryId, fn($q) => $q->where('country_id', $countryId))->count(),
+                'total_users' => User::when($countryId, fn($q) => $q->where('country_id', $countryId))->count(),
                 'game_balance_withdraw' => GameBalanceWithdraw::where('type', 'withdraw')->sum('amount'),
                 'game_balance_deposit' => GameBalanceWithdraw::where('type', 'deposit')->sum('amount'),
                 'today_game_balance_withdraw' => GameBalanceWithdraw::where('type', 'withdraw')
@@ -605,7 +614,7 @@ class DashbordController extends Controller
    public function chat()
 {
    
-        $chat_data_all=Chat::all();
+        $chat_data_all=Chat::latest('id')->limit(500)->get();
         return view('backend.chat', compact('chat_data_all'));
         
    
@@ -644,9 +653,9 @@ private function deleteOldRecordsAsync($record_keys)
                     'useTLS' => true
                 );
                   $pusher = new Pusher\Pusher(
-                    '9ce9d96701d6600b426e',
-                    '71aedfa829b4eb09c453',
-                    '1618585',
+                    env('PUSHER_KICK_APP_KEY'),
+                    env('PUSHER_KICK_APP_SECRET'),
+                    env('PUSHER_KICK_APP_ID'),
                     $options
                 );
                 array_push($response,array('message'=>'Kick Successfully ','channelName'=>$check_live->channelName,'user_id'=>$id,'code'=>'200'));
