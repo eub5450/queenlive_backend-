@@ -4,6 +4,7 @@ Laravel 10 / PHP 8.1 admin + API backend for the **QueenLive** live-streaming pl
 
 ## Recent Updates
 
+- **2026-07-20** — Session 4: `UserEmailChangeStore` dead-return bug fixed (new ID create now works); same-user swap guard added; user 1111111 (m01809752@gmail.com) created.
 - **2026-07-20** — [WORKLIST_20260720.md](WORKLIST_20260720.md): Session 3 — user ID re-serialisation (99000xxx → 1111156–1111179, AUTO_INCREMENT=1111180), phone race-condition fix in all 3 AuthControllers, email-change admin alert fix, 9797 orphan rows deleted across 8 tables, laravel.log cleared on both nodes.
 - **2026-07-20** — Session 2: sub-admin empty-permissions lockout fixed (AdminSettingController + settings form `open` attr), profile view NID `@endif` bug fixed (all 6 history sections were hidden from sub-admins without `profile_nid`).
 - **2026-07-20** — Session 1: full RBAC from zero — AdminParmisiton model + migration, 60-key permission system (11 groups), sidebar/dashboard gating, 5-controller country scoping, 13 bugs fixed. See [PERMISSION_SYSTEM.md](PERMISSION_SYSTEM.md) and [ADMIN_BUGS.md](ADMIN_BUGS.md).
