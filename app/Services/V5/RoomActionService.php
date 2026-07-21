@@ -403,12 +403,11 @@ class RoomActionService
                 $roomType,
                 $channel,
                 (int) $call->set_no,
-                [
-                    'co_host_id' => (string) $coHostId,
-                    'cohost_id'  => (string) $coHostId,
-                    'host_id'    => (string) $hostId,
-                    'mute'       => (int) $call->mute,
-                ],
+                // Full enriched delta (name/profile/frame/level/is_vip) so the
+                // fast per-seat room.seat.updated event also lets every audience
+                // render the joining cohost immediately — not just an id on a
+                // blank seat.
+                $this->seatDeltaForCall($hostId, $channel, $call),
                 (string) $hostId
             );
         } catch (\Throwable $t) {
@@ -2937,8 +2936,24 @@ class RoomActionService
                 ->toArray();
         }
 
+        // Load each seated cohost's identity in ONE batched query so the
+        // snapshot carries name/profile/frame/level/is_vip. WITHOUT these,
+        // every audience that receives room.snapshot renders the cohost seat
+        // BLANK (they never see who joined the seat) — the host still sees them
+        // because it already holds their profile from the pending-request flow.
+        // Keyed by string id to match co_host_id typing.
+        $coHostUsers = collect();
+        if (!empty($cohostIds)) {
+            $coHostUsers = User::whereIn('id', $cohostIds)->get()
+                ->keyBy(function ($u) {
+                    return (string) $u->id;
+                });
+        }
+
         $coHostList = $coHostRows
-            ->map(function ($c) use ($coHostGiftTotals) {
+            ->map(function ($c) use ($coHostGiftTotals, $coHostUsers) {
+                $u = $coHostUsers[(string) $c->co_host_id] ?? null;
+
                 return [
                     'call_id'    => $c->id,
                     'co_host_id' => (string) $c->co_host_id,
@@ -2946,6 +2961,11 @@ class RoomActionService
                     'mute'       => (int) $c->mute,
                     'super_mute' => (int) ($c->super_mute ?? 0),
                     'balance'    => (int) ($coHostGiftTotals[$c->co_host_id] ?? 0),
+                    'name'       => $u ? ($u->name ?? null) : null,
+                    'profile'    => $u ? ($u->profile ?? null) : null,
+                    'frame'      => $u ? ($u->frame ?? null) : null,
+                    'level'      => $u ? (int) ($u->level ?? $u->lavel ?? 0) : 0,
+                    'is_vip'     => $u ? (int) ($u->is_vip ?? $u->vip ?? 0) : 0,
                 ];
             })
             ->all();
