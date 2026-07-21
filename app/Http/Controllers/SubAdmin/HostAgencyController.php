@@ -205,7 +205,8 @@ class HostAgencyController extends Controller
           $agency->status=1;
           $agency->save();
           $check_user->is_agency=1;
-          $check_user->is_coin_protal_active=1;
+          // Portal decoupled from agency (boss): do not auto-enable the coin
+          // portal on agency activation — use the dedicated admin portal action.
           $check_user->save();
           $notification=array(
                 'messege'=>'Agency Active SuccessFully',

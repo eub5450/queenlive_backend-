@@ -58,7 +58,9 @@ class AgencyController extends Controller
                 $agency->save();
 
                 $check_user->is_agency = 1;
-                $check_user->is_coin_protal_active = 1;
+                // Portal is decoupled from agency per boss: is_coin_protal_active
+                // is controlled ONLY by the dedicated admin portal action, so
+                // becoming an agency no longer auto-enables the coin portal.
                 $check_user->save();
             });
            $notification=array(
@@ -117,7 +119,8 @@ class AgencyController extends Controller
           $agency->status=1;
           $agency->save();
           $check_user->is_agency=1;
-          $check_user->is_coin_protal_active=1;
+          // Portal decoupled from agency (boss): do not auto-enable the coin
+          // portal on agency activation — use the dedicated admin portal action.
           $check_user->save();
           $notification=array(
                 'messege'=>'Agency Active SuccessFully',
@@ -149,7 +152,9 @@ class AgencyController extends Controller
             if ($check_user) {
                 $check_user->update([
                     'is_agency' => 0,
-                    'is_coin_protal_active' => 0,
+                    // Portal decoupled from agency (boss): leave
+                    // is_coin_protal_active untouched on agency removal — it is
+                    // owned solely by the dedicated admin portal action.
                     'host_badge' => 0,
                     'comment_badge' => 0,
                     'frame' => null,
